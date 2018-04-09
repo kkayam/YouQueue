@@ -20,7 +20,6 @@ function next(){
 }
 
 var queueText = document.getElementById('queue');
-var headerText = document.getElementById('header');
 var removeButton = document.getElementById('removeQueue');
 var refreshButton = document.getElementById('refreshQueue');
 var nextButton = document.getElementById('nextQueue');
