@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "Play Next",
+  "description": "Play Next",
+  "version": "2.0",
+  "permissions": [
+      "https://www.youtube.com/*",
+      "contextMenus",
+      "background",
+      "storage",
+      "tabs"
+    ],
+  "browser_action": {
+     "default_popup": "popup.html"
+  },
+  "background": {
+      "scripts": ["playnext.js"]
+    },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "js": ["videoEnd.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
