@@ -17,8 +17,3 @@ function next(){
 vid.onended = function(e) {
     next()
   }
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-      if (request.message == "next")
-        next();
-  });

@@ -3,7 +3,7 @@
 
   "name": "YouQueue",
   "description": "Queue youtube videos - the bare bones for max performance",
-  "version": "3.0",
+  "version": "3.2",
   "permissions": [
       "https://www.youtube.com/*",
       "contextMenus",
@@ -20,9 +20,8 @@
     },
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/watch*"],
-      "js": ["content.js"],
-      "run_at": "document_end"
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"]
     }
   ]
 }

@@ -30,19 +30,21 @@
     h2
     {
       -webkit-transition: 0.2s all ease;
+      animation-name: example;
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
     }
-    h2:hover
-    {
-      text-shadow: 0 0 20px #BBB,
-       0 0 2px #000;
+    @keyframes example {
+    0% {color: black; text-shadow: 0 0 0px black;}
+    50% {color: #555555; text-shadow: 0 0 8px #555555;}
+    100% {color: black; text-shadow: 0 0 0px black;}
     }
     </style>
-    <header id ="header" align="center"><h2>YouQueue | Boney</h2></header>
+    <header id ="header" align="center"><h2>YouQueue</h2></header>
     <p id="queue" align="center"></p>
     <div align="center">
     <button class="btn" id="removeQueue">Clear queue</button>
     <button class="btn" id="nextQueue" rows="2">Next</button>
-    <button class="btn" id="refreshQueue">Refresh queue</button>
     </div>
     <script src="popup.js"></script>
   </body>

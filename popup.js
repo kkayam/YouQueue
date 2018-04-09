@@ -20,13 +20,19 @@ function writeOutQueue(){
 }
 
 function next(){
-  chrome.tabs.sendMessage(tabid, {message:"next"}, function(response){});
-  writeOutQueue();
+  chrome.storage.local.get({'queue':[]}, function(result) {
+          videoqueue=result.queue;
+          var vidurl = videoqueue[0];
+          videoqueue.shift();
+          chrome.storage.local.set({'queue': videoqueue}, function() {
+            writeOutQueue();
+          });
+          chrome.tabs.update(tabid, {url: vidurl});
+        });
 }
 
 var queueText = document.getElementById('queue');
 var removeButton = document.getElementById('removeQueue');
-var refreshButton = document.getElementById('refreshQueue');
 var nextButton = document.getElementById('nextQueue');
 
 window.onload = function() {
@@ -34,5 +40,4 @@ window.onload = function() {
 };
 
 removeButton.addEventListener('click', function() {removeAll()});
-refreshButton.addEventListener('click', function() {writeOutQueue()});
 nextButton.addEventListener('click', function() {next()});
