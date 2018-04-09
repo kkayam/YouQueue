@@ -27,6 +27,13 @@ chrome.contextMenus.create({
   documentUrlPatterns: ["https://www.youtube.com/*"]
 });
 
+chrome.tabs.onRemoved.addListener(function(closedtabid, removed) {
+ if (closedtabid == tabid){
+   tabid="none";
+   saveTabInfo();
+ }
+});
+
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "playnext") {
         addNext(info,tab);
