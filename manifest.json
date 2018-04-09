@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "YoutubeNext",
+  "name": "YouQueue",
   "description": "Queue youtube videos - the bare bones for max performance",
   "version": "3.0",
   "permissions": [
@@ -16,12 +16,12 @@
      "default_popup": "popup.html"
   },
   "background": {
-      "scripts": ["playnext.js"]
+      "scripts": ["background.js"]
     },
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/watch*"],
-      "js": ["videoEnd.js"],
+      "js": ["content.js"],
       "run_at": "document_end"
     }
   ]
