@@ -23,7 +23,8 @@ chrome.contextMenus.create({
 chrome.contextMenus.create({
   id: "playnexthere",
   title: "Play next here",
-  contexts: ["page"]
+  contexts: ["page"],
+  documentUrlPatterns: ["https://www.youtube.com/*"]
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
