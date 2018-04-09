@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Play Next BONE",
+  "name": "PlaynextBONEY",
   "description": "Play Next boney version - the bare bones",
   "version": "3.0",
   "permissions": [
@@ -11,6 +11,7 @@
       "storage",
       "tabs"
     ],
+  "icons": { "200": "icon200.png"},
   "browser_action": {
      "default_popup": "popup.html"
   },
