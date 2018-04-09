@@ -21,6 +21,7 @@ function writeOutQueue(){
 
 function next(){
   chrome.tabs.sendMessage(tabid, {message:"next"}, function(response){});
+  writeOutQueue();
 }
 
 var queueText = document.getElementById('queue');
