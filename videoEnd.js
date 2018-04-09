@@ -15,10 +15,10 @@ function next(){
 }
 
 vid.onended = function(e) {
-    next();
+    next()
   }
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      if (request.action == "next")
+      if (request.message == "next")
         next();
   });

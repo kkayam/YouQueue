@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Play Next",
-  "description": "Play Next",
-  "version": "2.0",
+  "name": "Play Next BONE",
+  "description": "Play Next boney version - the bare bones",
+  "version": "3.0",
   "permissions": [
       "https://www.youtube.com/*",
       "contextMenus",
@@ -21,7 +21,7 @@
     {
       "matches": ["https://www.youtube.com/watch*"],
       "js": ["videoEnd.js"],
-      "run_at": "document_start"
+      "run_at": "document_end"
     }
   ]
 }

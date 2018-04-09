@@ -36,7 +36,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     }
 });
 
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(
+  function(msg, sender, sendResponse) {
     if (msg.type == "tabid" && tabid=="none")
       tabid = sender.tab.id;
       saveTabInfo();
