@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "PlaynextBONEY",
-  "description": "Play Next boney version - the bare bones",
+  "name": "YoutubeNext",
+  "description": "Queue youtube videos - the bare bones for max performance",
   "version": "3.0",
   "permissions": [
       "https://www.youtube.com/*",
