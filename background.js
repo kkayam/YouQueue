@@ -17,7 +17,8 @@ function saveTabInfo(){
 chrome.contextMenus.create({
   id: "playnext",
   title: "Play next",
-  contexts: ["link"]
+  contexts: ["link"],
+  documentUrlPatterns: ["https://www.youtube.com/*"]
 });
 
 chrome.contextMenus.create({
