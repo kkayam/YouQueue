@@ -3,7 +3,7 @@
 
   "name": "YouQueue",
   "description": "Queue youtube videos - the bare bones for max performance",
-  "version": "3.3",
+  "version": "3.4",
   "permissions": [
       "https://www.youtube.com/*",
       "contextMenus",
@@ -11,7 +11,7 @@
       "storage",
       "tabs"
     ],
-  "icons": { "200": "icon200.png"},
+  "icons": { "128": "icon1.png"},
   "browser_action": {
      "default_popup": "popup.html"
   },
