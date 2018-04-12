@@ -1,27 +1,27 @@
 {
-  "manifest_version": 2,
+    "manifest_version": 2,
 
-  "name": "YouQueue",
-  "description": "Queue youtube videos - the bare bones for max performance",
-  "version": "3.4",
-  "permissions": [
-      "https://www.youtube.com/*",
-      "contextMenus",
-      "background",
-      "storage",
-      "tabs"
+    "name": "YouQueue",
+    "description": "Queue youtube videos - the bare bones for max performance",
+    "version": "3.4",
+    "permissions": [
+        "https://www.youtube.com/*",
+        "contextMenus",
+        "background",
+        "storage",
+        "tabs"
     ],
-  "icons": { "128": "icon1.png"},
-  "browser_action": {
-     "default_popup": "popup.html"
-  },
-  "background": {
-      "scripts": ["background.js"]
+    "icons": {
+        "128": "icon1.png"
     },
-  "content_scripts": [
-    {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["content.js"]
-    }
-  ]
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [{
+        "matches": ["https://www.youtube.com/*"],
+        "js": ["content.js"]
+    }]
 }
