@@ -6,6 +6,7 @@
     "version": "3.4",
     "permissions": [
         "https://www.youtube.com/*",
+        "https://www.googleapis.com/*",
         "contextMenus",
         "background",
         "storage",
