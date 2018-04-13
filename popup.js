@@ -30,8 +30,7 @@ function writeOutQueue() {
                 url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet",
                 dataType: "jsonp",
                 success: function(data) {
-                    alert("data.items[0].snippet.title");
-                    queueText.innerHTML += data.items[0].snippet.title;
+                    queueText.innerHTML += data.items[0].snippet.title + "<br>";
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     alert(textStatus, +' | ' + errorThrown);
