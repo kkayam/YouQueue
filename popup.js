@@ -15,31 +15,30 @@ function getTabid() {
 }
 
 var tabid;
-var apiKey = AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec;
+var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
 
 function writeOutQueue() {
     getTabid();
-    queueText.innerHTML="";
-    alert(0);
+    queueText.innerHTML = "";
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
-      alert(1);
+
         for (var i = 0; i < result.queue.length; i++) {
-          alert(1.5);
-          var videoId = result.queue[i].slice((result.queue[i].indexOf("?v=")+3),(result.queue[i].indexOf("?v=")+14));
+            var videoId = result.queue[i].slice((result.queue[i].indexOf("?v=") + 3), (result.queue[i].indexOf("?v=") + 14));
             $.ajax({
                 url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet",
                 dataType: "jsonp",
                 success: function(data) {
-                    alert(data.items[0].snippet.title);
-                    queueText.innerHTML +=data.items[0].snippet.title;
+                    alert("data.items[0].snippet.title");
+                    queueText.innerHTML += data.items[0].snippet.title;
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     alert(textStatus, +' | ' + errorThrown);
                 }
-            });
+            } );
         }
+    
     });
 }
 
