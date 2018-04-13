@@ -15,7 +15,6 @@ function getTabid() {
 }
 
 var tabid;
-var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
 
 function writeOutQueue() {
     getTabid();
@@ -23,31 +22,24 @@ function writeOutQueue() {
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
-
         for (var i = 0; i < result.queue.length; i++) {
-            var videoId = result.queue[i].slice((result.queue[i].indexOf("?v=") + 3), (result.queue[i].indexOf("?v=") + 14));
-            $.ajax({
-                url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet",
-                dataType: "jsonp",
-                success: function(data) {
-                    queueText.innerHTML += data.items[0].snippet.title + "<br>";
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert(textStatus, +' | ' + errorThrown);
-                }
-            } );
+            queueText.innerHTML += result.queue[i][0] + "<br>";
         }
-    
+
     });
 }
 
 function next() {
+    nextto(0);
+}
+
+function nextto(index) {
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
         videoqueue = result.queue;
-        var vidurl = videoqueue[0];
-        videoqueue.shift();
+        var vidurl = videoqueue[index][1];
+        videoqueue.splice(index, 1);
         chrome.storage.local.set({
             'queue': videoqueue
         }, function() {

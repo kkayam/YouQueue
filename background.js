@@ -1,4 +1,5 @@
 var tabid = "none";
+var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
 saveTabInfo();
 
 function addNext(info, tab) {
@@ -7,10 +8,20 @@ function addNext(info, tab) {
         'queue': []
     }, function(result) {
         videoqueue = result.queue;
-        videoqueue.push(info.linkUrl);
-        chrome.storage.local.set({
-            'queue': videoqueue
-        }, function() {});
+        var videoId = info.linkUrl.slice((info.linkUrl.indexOf("?v=") + 3), (info.linkUrl.indexOf("?v=") + 14));
+        $.ajax({
+            url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet",
+            dataType: "jsonp",
+            success: function(data) {
+                videoqueue.push([data.items[0].snippet.title, info.linkUrl]);
+                chrome.storage.local.set({
+                    'queue': videoqueue
+                }, function() {});
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(textStatus, +' | ' + errorThrown);
+            }
+        });
     });
 }
 
