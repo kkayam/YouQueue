@@ -1,3 +1,6 @@
+var tabid = "none";
+saveTabInfo();
+
 function addNext(info, tab) {
     var videoqueue;
     chrome.storage.local.get({
@@ -10,10 +13,6 @@ function addNext(info, tab) {
         }, function() {});
     });
 }
-
-var tabid = "none";
-saveTabInfo();
-
 
 function saveTabInfo() {
     chrome.storage.local.set({

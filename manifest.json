@@ -6,6 +6,7 @@
     "version": "3.4",
     "permissions": [
         "https://www.youtube.com/*",
+        "https://www.googleapis.com/*",
         "contextMenus",
         "background",
         "storage",
@@ -20,6 +21,7 @@
     "background": {
         "scripts": ["background.js"]
     },
+    "content_security_policy": "script-src 'self' https://www.googleapis.com/; object-src 'self'",
     "content_scripts": [{
         "matches": ["https://www.youtube.com/*"],
         "js": ["content.js"]
