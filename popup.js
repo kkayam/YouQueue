@@ -22,15 +22,15 @@ function writeOutQueue() {
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
-        result.queue.forEach( function(element, index) {
+        result.queue.forEach(function(element, index) {
             queueText.innerHTML += "<a href='#' class='listobject' index='" + index + "'>" + element[0] + "</a><br>";
         });
         var queuelist = document.querySelectorAll(".listobject");
-            queuelist.forEach( function(element, index) {
-                element.onclick = function(){
+        queuelist.forEach(function(element, index) {
+            element.onclick = function() {
                 nextto(index);
             };
-            });
+        });
     })
 }
 
