@@ -10,7 +10,7 @@ function next() {
         'queue': []
     }, function(result) {
         videoqueue = result.queue;
-        var vidurl = videoqueue[0];
+        var vidurl = videoqueue[0][1];
         videoqueue.shift();
         chrome.storage.local.set({
             'queue': videoqueue
