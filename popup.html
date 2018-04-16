@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>PlayNext</title>
+    <title>YouQueue</title>
     <style type="text/css">
          body {
             width: 300px;
@@ -25,6 +25,31 @@
     .btn:hover {
       background-color: #555555;
       color: white;
+    }
+    
+    a {
+      font-family: helvetica;
+      font-size: 13pt;
+      text-decoration: none;
+      position: relative;
+      display: inline-block;
+      margin-top:10px;
+      color: #444;
+      cursor: pointer;
+    }
+    a:after {
+      content: ' ';
+      position: absolute;
+      z-index: -1;
+      bottom: -0.15em;
+      left: -.15em;
+      width: calc(100% + .3em);
+      height: 0em;
+      background: #80808080;
+      transition: all .2s;
+    }
+    a:hover:after {
+      height: calc(100% + 0.3em);
     }
 
     h2

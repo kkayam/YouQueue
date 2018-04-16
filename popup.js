@@ -23,7 +23,7 @@ function writeOutQueue() {
         'queue': []
     }, function(result) {
         result.queue.forEach(function(element, index) {
-            queueText.innerHTML += "<a href='#' class='listobject' index='" + index + "'>" + element[0] + "</a><br>";
+            queueText.innerHTML += "<a class='listobject' index='" + index + "'>" + element[0] + "</a><br>";
         });
         var queuelist = document.querySelectorAll(".listobject");
         queuelist.forEach(function(element, index) {
