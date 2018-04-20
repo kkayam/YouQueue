@@ -35,7 +35,7 @@ chrome.contextMenus.create({
     id: "playnext",
     title: "Play next",
     contexts: ["link"],
-    documentUrlPatterns: ["https://www.youtube.com/*"]
+    targetUrlPatterns: ["https://www.youtube.com/*"]
 });
 
 chrome.contextMenus.create({
