@@ -19,6 +19,19 @@ function next() {
     });
 }
 
+function addQueueButtons()
+{
+    var overlays = document.querySelectorAll('overlays');
+    overlays.forEach(function(overlay,index) {
+        var btn = document.createElement("BUTTON");
+        var t = document.createTextNode("Heyy");
+        btn.appendChild(t);
+        overlay.appendChild(btn);
+    });
+}
+
+addQueueButtons(); 
+
 vid.onended = function(e) {
     next()
 }
