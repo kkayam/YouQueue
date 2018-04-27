@@ -68,6 +68,12 @@ window.onload = function() {
     writeOutQueue();
 };
 
+chrome.tabs.onUpdated.addListener(function(updatedtabid,changeinfo,updatedtab){
+    if (updatedtabid==tabid && changeinfo.url!=null) {
+        writeOutQueue();
+    }
+});
+
 removeButton.addEventListener('click', function() {
     removeAll()
 });
