@@ -3,7 +3,7 @@
 
     "name": "YouQueue",
     "description": "Queue youtube videos - the bare bones for max performance",
-    "version": "3.700",
+    "version": "3.710",
     "permissions": [
         "https://www.youtube.com/*",
         "https://www.googleapis.com/*",

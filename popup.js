@@ -22,7 +22,7 @@ function writeOutQueue() {
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
-        if (result.queue.length==0) {
+        if (result.queue.length == 0) {
             queueText.innerHTML = "<h2 class='empty'>😓Empty😓</h2>"
             return;
         }
@@ -68,8 +68,8 @@ window.onload = function() {
     writeOutQueue();
 };
 
-chrome.tabs.onUpdated.addListener(function(updatedtabid,changeinfo,updatedtab){
-    if (updatedtabid==tabid && changeinfo.url!=null) {
+chrome.tabs.onUpdated.addListener(function(updatedtabid, changeinfo, updatedtab) {
+    if (updatedtabid == tabid && changeinfo.url != null) {
         writeOutQueue();
     }
 });

@@ -3,83 +3,117 @@
   <head>
     <title>YouQueue</title>
     <style type="text/css">
-         body {
-            width: 300px;
-            overflow: hidden;
-         }
-     </style>
+    body {
+    width: 300px;
+    overflow: hidden;
+    }
+    </style>
   </head>
   <body>
     <meta charset='utf-8'>
     <style type="text/css">
     .btn {
-        background-color: white;
-        border-radius: 3px;
-        transition-duration: 0.4s;
-        display: inline-block;
-        cursor: pointer;
-        border: 3px solid #555555;
-        width: 49%;
-        height: 50px;
-        vertical-align: middle;
+    background-color: white;
+    border-radius: 3px;
+    transition-duration: 0.4s;
+    display: inline-block;
+    cursor: pointer;
+    border: 3px solid #555555;
+    width: 49%;
+    height: 50px;
+    vertical-align: middle;
     }
     .btn:hover {
-      background-color: #555555;
-      color: white;
+    background-color: #555555;
+    color: white;
+    }
+
+    .input_container{
+      display: block;
+      text-align: center;
+    }
+    .awsome_input{
+      margin-top: 10px;
+      font-size: 12pt;
+      font-weight: bold;
+      color: grey;
+      border: none;
+      background: transparent;
+      text-align: center;
+      width: 100%;
+    }
+    .awsome_input_border{
+      display:inline-block;
+      width:15%;
+      height: 3px;
+      background: #555555;
+      position: relative;
+      top: -8px;
+      -webkit-transition: all ease-in-out .15s;
+      -o-transition: all ease-in-out .15s;
+      transition: all ease-in-out .15s;
+    }
+    .awsome_input:active, 
+    .awsome_input:focus{
+      outline: none;
+      color:black;
+      font-size: 14pt;
+    }
+    .awsome_input:active+.awsome_input_border, 
+    .awsome_input:focus+.awsome_input_border{
+      width:50%;
+      top:-6px;
     }
     
     hr.div {
-      width: 200px;
-      color: red;
-      margin-top: 10px;
-      margin-bottom: 10px
+    width: 200px;
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 10px
     }
-
     a {
-      font-family: helvetica;
-      font-size: 13pt;
-      text-decoration: none;
-      position: relative;
-      display: block;
-      margin-top:10px;
-      color: #444;
-      cursor: pointer;
+    font-family: helvetica;
+    font-size: 13pt;
+    text-decoration: none;
+    position: relative;
+    display: block;
+    margin-top:10px;
+    color: #444;
+    cursor: pointer;
     }
     a:after {
-      content: ' ';
-      position: absolute;
-      z-index: -1;
-      bottom: -0.15em;
-      left: -.15em;
-      width: calc(100% + .3em);
-      height: 0em;
-      background: #80808080;
-      transition: all .2s;
+    content: ' ';
+    position: absolute;
+    z-index: -1;
+    bottom: -0.15em;
+    left: -.15em;
+    width: calc(100% + .3em);
+    height: 0em;
+    background: #80808080;
+    transition: all .2s;
     }
     a:hover:after {
-      height: calc(100% + 0.3em);
+    height: calc(100% + 0.3em);
     }
-
     h2.empty
-    { 
-      font-size: 35px;
-      text-align: center;
-      margin-bottom: 20px;
-      margin-top: 9px;
-      text-shadow: -3px 3px 0px #FF00DCFF,
-                 -6px 6px 0px #01cccc,
-                 -9px 9px 0px #00FF39FF;
+    {
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 9px;
+    text-shadow: -3px 3px 0px #FF00DCFF,
+    -6px 6px 0px #01cccc,
+    -9px 9px 0px #00FF39FF;
     }
-
     h2.head
     {
-      margin-top: 0px;
-      margin-bottom: 0px; 
-      font-size: 25px;
-      -webkit-transition: 0.2s all ease;
-      animation-name: example;
-      animation-duration: 4s;
-      animation-iteration-count: infinite;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 25px;
+    -webkit-transition: 0.2s all ease;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
     }
     @keyframes example {
     0% {color: black; text-shadow: 0 0 0px black;}
@@ -87,13 +121,20 @@
     100% {color: black; text-shadow: 0 0 0px black;}
     }
     </style>
-    <header id ="header" align="center"><h2 class="head">YouQueue</h2><hr class="div"></header>
-    <p id="queue" align="center"></p>
-    <div align="center">
+  <header id ="header" align="center"><h2 class="head">YouQueue</h2><hr class="div"></header>
+  <p id="queue" align="center"></p>
+  <div align="center">
     <hr class="div">
     <button class="btn" id="removeQueue">Clear queue</button>
     <button class="btn" id="nextQueue" rows="2">Next</button>
-    </div>
-    <script type="text/javascript" src="popup.js"></script>
-  </body>
+  </div>
+  
+  <div class="input_container">
+  <input type="text" class="awsome_input" 
+  placeholder="search"/>
+  <span class="awsome_input_border"/>
+  </div>
+
+  <script type="text/javascript" src="popup.js"></script>
+</body>
 </html>
