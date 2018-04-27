@@ -48,8 +48,10 @@ function addNext(name, nexturl) {
         videoqueue.push([name, nexturl]);
         chrome.storage.local.set({
             'queue': videoqueue
-        }, function() {});
-    })
+        }, function() {
+            writeOutQueue();
+        });
+    });
 }
 
 function next() {
@@ -106,22 +108,24 @@ function makeRequest() {
         maxResults: 4
     });
     request.execute(function(response) {
-        $('#results').empty()
         var srchItems = response.result.items;
+        var vidurls = [];
+        var vidtitles = [];
         searchresults.innerHTML = "";
         $.each(srchItems, function(index, item) {
             vidTitle = item.snippet.title;
-            vidUrl = "https://www.youtube.com/watch?v="+item.id.videoId;
-            searchresults.innerHTML += "<a class='searchelement' url='"+vidUrl+"'>" + vidTitle + "</a>";
-        })
-    })
-    var searchlist = document.querySelectorAll(".searchelement");
-    searchlist.forEach(function(element, index) {
+            vidtitles.push(vidTitle);
+            vidUrl = "https://www.youtube.com/watch?v=" + item.id.videoId;
+            vidurls.push(vidUrl);
+            searchresults.innerHTML += "<a class='searchelement'>" + vidTitle + "</a>";
+        });
+        var searchlist = document.querySelectorAll(".searchelement");
+        searchlist.forEach(function(element, index) {
             element.onclick = function() {
-                addNext(element.innerHTML,element.getAttribute("url"));
-                writeOutQueue();
+                addNext(vidtitles[index], vidurls[index]);
             };
         });
+    })
 }
 
 searchbar.addEventListener('keydown', function(e) {
