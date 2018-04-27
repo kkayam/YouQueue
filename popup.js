@@ -70,9 +70,16 @@ function nextto(index) {
         }, function() {
             writeOutQueue();
         });
-        chrome.tabs.update(tabid, {
-            url: vidurl
-        });
+        if (tabid=="none") {
+            chrome.tabs.create({ url: vidurl }, function(tab){
+                tabid = tab.id;
+            });
+        }
+        else {
+            chrome.tabs.update(tabid, {
+                url: vidurl
+            });
+        }
     });
 }
 
@@ -81,6 +88,7 @@ var removeButton = document.getElementById('removeQueue');
 var nextButton = document.getElementById('nextQueue');
 var searchBar = document.getElementById('searchbar');
 var searchresults = document.getElementById('searchresults');
+var searchlistarea = document.getElementById("searchlistarea");
 
 window.onload = function() {
     writeOutQueue();
@@ -127,10 +135,20 @@ function makeRequest() {
         });
     })
 }
-
+var timeout = null;
 searchbar.addEventListener('keydown', function(e) {
-    keyWordsearch();
+    if (e.keyCode==13) {
+        searchbar.value=""
+    }
+    else if (searchbar.value!="") {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(function() {
+            keyWordsearch();
+        }, 350);
+    }
 });
+
 removeButton.addEventListener('click', function() {
     removeAll()
 });
