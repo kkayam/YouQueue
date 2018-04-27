@@ -15,6 +15,7 @@ function getTabid() {
 }
 
 var tabid;
+var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
 
 function writeOutQueue() {
     getTabid();
@@ -35,6 +36,19 @@ function writeOutQueue() {
                 nextto(index);
             };
         });
+    })
+}
+
+function addNext(name, nexturl) {
+    var videoqueue;
+    chrome.storage.local.get({
+        'queue': []
+    }, function(result) {
+        videoqueue = result.queue;
+        videoqueue.push([name, nexturl]);
+        chrome.storage.local.set({
+            'queue': videoqueue
+        }, function() {});
     })
 }
 
@@ -63,6 +77,8 @@ function nextto(index) {
 var queueText = document.getElementById('queue');
 var removeButton = document.getElementById('removeQueue');
 var nextButton = document.getElementById('nextQueue');
+var searchBar = document.getElementById('searchbar');
+var searchresults = document.getElementById('searchresults');
 
 window.onload = function() {
     writeOutQueue();
@@ -74,6 +90,43 @@ chrome.tabs.onUpdated.addListener(function(updatedtabid, changeinfo, updatedtab)
     }
 });
 
+function keyWordsearch() {
+    gapi.client.setApiKey(apiKey);
+    gapi.client.load('youtube', 'v3', function() {
+        makeRequest();
+    });
+}
+
+function makeRequest() {
+    var q = searchbar.value;
+    var request = gapi.client.youtube.search.list({
+        type: "video",
+        q: q,
+        part: 'snippet',
+        maxResults: 4
+    });
+    request.execute(function(response) {
+        $('#results').empty()
+        var srchItems = response.result.items;
+        searchresults.innerHTML = "";
+        $.each(srchItems, function(index, item) {
+            vidTitle = item.snippet.title;
+            vidUrl = "https://www.youtube.com/watch?v="+item.id.videoId;
+            searchresults.innerHTML += "<a class='searchelement' url='"+vidUrl+"'>" + vidTitle + "</a>";
+        })
+    })
+    var searchlist = document.querySelectorAll(".searchelement");
+    searchlist.forEach(function(element, index) {
+            element.onclick = function() {
+                addNext(element.innerHTML,element.getAttribute("url"));
+                writeOutQueue();
+            };
+        });
+}
+
+searchbar.addEventListener('keydown', function(e) {
+    keyWordsearch();
+});
 removeButton.addEventListener('click', function() {
     removeAll()
 });
