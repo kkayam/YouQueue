@@ -18,25 +18,35 @@ var tabid;
 var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
 
 function writeOutQueue() {
+    emptytext.innerHTML = "";
     getTabid();
     queueText.innerHTML = "";
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
         if (result.queue.length == 0) {
-            queueText.innerHTML = "<h2 class='empty'>😓Empty😓</h2>"
+            emptytext.innerHTML = "<h2 class='empty'>😓Empty😓</h2>"
             return;
         }
         result.queue.forEach(function(element, index) {
-            queueText.innerHTML += "<a class='listobject' index='" + index + "'>" + element[0] + "</a>";
+            queueText.innerHTML += "<tr><td><a class='deletebutton' index='"+index+"'>&#10006;</a></td> <td align='center'><a class='listobject' index='" + index + "'>" + element[0] + "</a></td></tr>";
         });
+
         var queuelist = document.querySelectorAll(".listobject");
         queuelist.forEach(function(element, index) {
             element.onclick = function() {
                 nextto(index);
             };
         });
-    })
+
+        var deletebuttons = document.querySelectorAll(".deletebutton");
+        deletebuttons.forEach(function(element, index) {
+            element.onclick = function() {
+                deleteindex(index);
+            };
+        });
+
+    });
 }
 
 function addNext(name, nexturl) {
@@ -56,6 +66,20 @@ function addNext(name, nexturl) {
 
 function next() {
     nextto(0);
+}
+
+function deleteindex(index) {
+    chrome.storage.local.get({
+        'queue': []
+    }, function(result) {
+        videoqueue = result.queue;
+        videoqueue.splice(index, 1);
+        chrome.storage.local.set({
+            'queue': videoqueue
+        }, function() {
+            writeOutQueue();
+        });
+    });
 }
 
 function nextto(index) {
@@ -89,6 +113,7 @@ var nextButton = document.getElementById('nextQueue');
 var searchBar = document.getElementById('searchbar');
 var searchresults = document.getElementById('searchresults');
 var searchlistarea = document.getElementById("searchlistarea");
+var emptytext = document.getElementById("emptytext");
 
 window.onload = function() {
     writeOutQueue();
@@ -100,10 +125,18 @@ chrome.tabs.onUpdated.addListener(function(updatedtabid, changeinfo, updatedtab)
     }
 });
 
-function keyWordsearch() {
+function keyWordsearch(e) {
+    if (searchbar.value=="") {
+        searchresults.innerHTML="";
+        return;
+    }
+    else if (searchbar.value=="credits:") {
+        searchresults.innerHTML="<a>Creator: Koray M Kaya <br> Beta testers: Sabeen and Haris <br><font size=17pt>😊</font></a>";
+        return;
+    }
     gapi.client.setApiKey(apiKey);
     gapi.client.load('youtube', 'v3', function() {
-        makeRequest();
+        makeRequest(e);
     });
 }
 
@@ -135,16 +168,44 @@ function makeRequest() {
         });
     })
 }
+
+function addfirstsearch(){
+    gapi.client.setApiKey(apiKey);
+    gapi.client.load('youtube', 'v3', function() {
+        getFirst();
+    });
+}
+
+function getFirst() {
+    var q = searchbar.value;
+    var request = gapi.client.youtube.search.list({
+        type: "video",
+        q: q,
+        part: 'snippet',
+        maxResults: 1
+    });
+    request.execute(function(response) {
+        var srchItems = response.result.items;
+        searchresults.innerHTML = "";
+        $.each(srchItems, function(index, item) {
+            vidTitle = item.snippet.title;
+            vidUrl = "https://www.youtube.com/watch?v=" + item.id.videoId;
+            addNext(vidTitle, vidUrl);
+            searchbar.value="";
+        });
+    })
+}
+
 var timeout = null;
 searchbar.addEventListener('keydown', function(e) {
     if (e.keyCode==13) {
-        searchbar.value=""
+        addfirstsearch();
     }
     else if (searchbar.value!="") {
         clearTimeout(timeout);
 
         timeout = setTimeout(function() {
-            keyWordsearch();
+            keyWordsearch(e);
         }, 350);
     }
 });
