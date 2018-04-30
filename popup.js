@@ -111,6 +111,7 @@ var queueText = document.getElementById('queue');
 var removeButton = document.getElementById('removeQueue');
 var nextButton = document.getElementById('nextQueue');
 var searchBar = document.getElementById('searchbar');
+searchBar.focus();
 var searchresults = document.getElementById('searchresults');
 var searchlistarea = document.getElementById("searchlistarea");
 var emptytext = document.getElementById("emptytext");
