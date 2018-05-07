@@ -29,23 +29,20 @@ function writeOutQueue() {
             return;
         }
         result.queue.forEach(function(element, index) {
-            queueText.innerHTML += "<tr><td><a class='deletebutton' index='"+index+"'>&#10006;</a></td> <td align='center'><a class='listobject' index='" + index + "'>" + element[0] + "</a></td></tr>";
+            queueText.innerHTML += "<tr><td><a class='deletebutton' index='" + index + "'>&#10006;</a></td> <td align='center'><a class='listobject' index='" + index + "'>" + element[0] + "</a></td></tr>";
         });
-
         var queuelist = document.querySelectorAll(".listobject");
         queuelist.forEach(function(element, index) {
             element.onclick = function() {
                 nextto(index);
             };
         });
-
         var deletebuttons = document.querySelectorAll(".deletebutton");
         deletebuttons.forEach(function(element, index) {
             element.onclick = function() {
                 deleteindex(index);
             };
         });
-
     });
 }
 
@@ -94,12 +91,13 @@ function nextto(index) {
         }, function() {
             writeOutQueue();
         });
-        if (tabid=="none") {
-            chrome.tabs.create({ url: vidurl }, function(tab){
+        if (tabid == "none") {
+            chrome.tabs.create({
+                url: vidurl
+            }, function(tab) {
                 tabid = tab.id;
             });
-        }
-        else {
+        } else {
             chrome.tabs.update(tabid, {
                 url: vidurl
             });
@@ -119,7 +117,6 @@ var emptytext = document.getElementById("emptytext");
 window.onload = function() {
     writeOutQueue();
 };
-
 chrome.tabs.onUpdated.addListener(function(updatedtabid, changeinfo, updatedtab) {
     if (updatedtabid == tabid && changeinfo.url != null) {
         writeOutQueue();
@@ -127,12 +124,11 @@ chrome.tabs.onUpdated.addListener(function(updatedtabid, changeinfo, updatedtab)
 });
 
 function keyWordsearch(e) {
-    if (searchbar.value=="") {
-        searchresults.innerHTML="";
+    if (searchbar.value == "") {
+        searchresults.innerHTML = "";
         return;
-    }
-    else if (searchbar.value=="credits:") {
-        searchresults.innerHTML="<a>Creator: Koray M Kaya <br> Beta testers: Sabeen and Haris <br><font size=17pt>😊</font></a>";
+    } else if (searchbar.value == "credits:") {
+        searchresults.innerHTML = "<a>Creator: Koray M Kaya <br> Beta testers: Sabeen and Haris <br><font size=17pt>😊</font></a>";
         return;
     }
     gapi.client.setApiKey(apiKey);
@@ -170,7 +166,7 @@ function makeRequest() {
     })
 }
 
-function addfirstsearch(){
+function addfirstsearch() {
     gapi.client.setApiKey(apiKey);
     gapi.client.load('youtube', 'v3', function() {
         getFirst();
@@ -192,19 +188,21 @@ function getFirst() {
             vidTitle = item.snippet.title;
             vidUrl = "https://www.youtube.com/watch?v=" + item.id.videoId;
             addNext(vidTitle, vidUrl);
-            searchbar.value="";
+            searchbar.value = "";
         });
     })
 }
 
 var timeout = null;
 searchbar.addEventListener('keydown', function(e) {
-    if (e.keyCode==13) {
-        addfirstsearch();
-    }
-    else if (searchbar.value!="") {
+    if (e.keyCode == 13) {
+        if (searchBar.value=="") {
+            next();
+        } else {
+            addfirstsearch();            
+        }
+    } else if (searchBar.value != "") {
         clearTimeout(timeout);
-
         timeout = setTimeout(function() {
             keyWordsearch(e);
         }, 350);
@@ -214,6 +212,7 @@ searchbar.addEventListener('keydown', function(e) {
 removeButton.addEventListener('click', function() {
     removeAll()
 });
+
 nextButton.addEventListener('click', function() {
     next()
 });
