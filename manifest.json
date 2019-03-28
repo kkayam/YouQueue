@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "YouQueue",
-    "description": "Queue youtube videos - the bare bones for max performance",
-    "version": "4.12",
+    "name": "YOUTUBE QUEUE",
+    "description": "Queue youtube videos and keep the performance",
+    "version": "4.121",
     "permissions": [
         "https://www.youtube.com/*",
         "https://www.googleapis.com/*",
