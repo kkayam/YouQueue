@@ -21,24 +21,24 @@ function updateTabTitle() {
         tabs.forEach(function(tab) {
             if (tab.id == tabid) {
                 queryTitle(tab);
-
+                return;
             }
         });
     });
-
+    currenttabdiv.style.display = 'none'
 }
 
 function queryTitle(tab) {
     var videoId = tab.url.slice((tab.url.indexOf("?v=") + 3), (tab.url.indexOf("?v=") + 14));
-    var title = "Could not get title";
     $.ajax({
         url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet",
         dataType: "jsonp",
         success: function(data) {
+            currenttabdiv.style.display = 'block'
             try {
                 tabtitle = data.items[0].snippet.title;
                 currenttab.innerHTML = tabtitle;
-                return title;
+                return;
             } catch (error) {
                 tabtitle = tab.title;
                 currenttab.innerHTML = tabtitle;
@@ -67,7 +67,7 @@ function writeOutQueue() {
             return;
         }
         result.queue.forEach(function(element, index) {
-            queueText.innerHTML += "<tr><td><a class='deletebutton' index='" + index + "'>&#10006;</a></td> <td align='center'><a class='listobject' index='" + index + "'>" + element[0] + "</a></td></tr>";
+            queueText.innerHTML += "<tr><td width = '25px'><a class='deletebutton' align='center' index='" + index + "'>&#10006;</a></td><td width='4px'></td> <td><a class='listobject' align='center' index='" + index + "'>" + element[0] + "</a></td></tr>";
         });
         var queuelist = document.querySelectorAll(".listobject");
         queuelist.forEach(function(element, index) {
@@ -153,6 +153,7 @@ var searchresults = document.getElementById('searchresults');
 var searchlistarea = document.getElementById("searchlistarea");
 var emptytext = document.getElementById("emptytext");
 var currenttab = document.getElementById("currenttab");
+var currenttabdiv = document.getElementById("currenttabdiv");
 
 window.onload = function() {
     writeOutQueue();

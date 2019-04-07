@@ -74,7 +74,10 @@
         margin-bottom: 10px;
         user-select: none;
         }
-        a {
+        a.currenttab {
+        font: 'droid sans';
+        }
+        a.listobject, a.searchelement, a.deletebutton {
         font-family: helvetica;
         font-size: 13pt;
         font-weight: bold;
@@ -86,16 +89,13 @@
         cursor: pointer;
         user-select: none;
         }
-        a.deletebutton {
-        font-size: 8pt;
-        }
         a.searchelement{
         font-weight: normal;
         }
-        a.listobject:after, a.searchelement:after {
+        a.listobject:after, a.searchelement:after, a.deletebutton:after {
         content: ' ';
         position: absolute;
-        z-index: -1;
+        z-index: -2;
         bottom: -0.15em;
         left: -.15em;
         width: calc(100% + .3em);
@@ -112,6 +112,10 @@
         }
         a.listobject:hover:after, a.searchelement:hover:after {
         background-color: #7FFF8E;
+        color: white;
+        }
+        a.deletebutton:hover:after {
+        background-color: #DF4F1FFF;
         color: white;
         }
         h2.empty
@@ -141,39 +145,39 @@
         50% {color: rgb(255,0,0); text-shadow: 0 0 8px rgb(255,0,0);}
         100% {color: black; text-shadow: 0 0 0px black;}
         }
-        table{
-        table-layout: auto;
-        width: 95%;
+        table.queue{
+        table-layout: fixed;
+        border-collapse: collapse;
+        width: 98%;
         }
         </style>
-    <header id ="header" align="center"><h2 class="head">YouQueue</h2><hr class="div"></header>
-    <div align="center">
+        <!-- This is ze header -->
+    <header id ="header" align="center"><h2>YouQueue</h2><hr class="div"></header>
+    <!-- This is the now playing text -->
+    <div align="center" id="currenttabdiv" style="display: none;">
         <b>📼Now Playing🎵</b>
         <br>
-        <b id="currenttab" align="center">Nothing</b>
+        <a class="currenttab" id="currenttab" align="center">Nothing</a>
     </div>
-    <table id="queue">
-        <colgroup>
-        <col width=10%>
-        <col width=90%>
-        </colgroup>
-    </table>
-    <p id="emptytext" align="center"></p>
-    <div align="center">
-        <button class="btn" id="removeQueue">Clear queue</button>
-        <button class="btn" id="nextQueue" rows="2">Next</button>
+    <!-- This is the queued videos -->
+<table id="queue" class="queue" align="center"></table>
+<p id="emptytext" align="center"></p>
+<!-- This is the buttons -->
+<div align="center">
+    <button class="btn" id="removeQueue">Clear queue</button>
+    <button class="btn" id="nextQueue" rows="2">Next</button>
+</div>
+<!-- This is the searchbar -->
+<div class="input_container">
+    <img src="infoicon.png" width="20" height="20" title="Enter:&#013;Adds the first video from the results or plays next if the searchbar is empty." style="margin-top: 10px">
+    <input id="searchbar" type="text" class="awsome_input"
+    placeholder="quick add" title="Enter to add"/>
+    <span class="awsome_input_border"/>
     </div>
-    
-    <div class="input_container">
-        <img src="infoicon.png" width="20" height="20" title="Enter:&#013;Adds the first video from the results or plays next if the searchbar is empty." style="margin-top: 10px">
-        <input id="searchbar" type="text" class="awsome_input"
-        placeholder="quick add" title="Enter to add"/>
-        <span class="awsome_input_border"/>
-        </div>
-        <div id="searchresults" align="center">
-        </div>
-        <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady">  </script>
-        <script src="jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="popup.js"></script>
-    </body>
+    <div id="searchresults" align="center">
+    </div>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady">  </script>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
+</body>
 </html>
