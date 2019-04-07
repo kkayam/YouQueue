@@ -11,10 +11,48 @@ function getTabid() {
         'tab': []
     }, function(result) {
         tabid = result.tab;
+        updateTabTitle();
     });
 }
 
+function updateTabTitle() {
+    chrome.tabs.query({
+    }, function(tabs) {
+        tabs.forEach(function(tab) {
+            if (tab.id == tabid) {
+                queryTitle(tab);
+
+            }
+        });
+    });
+
+}
+
+function queryTitle(tab) {
+    var videoId = tab.url.slice((tab.url.indexOf("?v=") + 3), (tab.url.indexOf("?v=") + 14));
+    var title = "Could not get title";
+    $.ajax({
+        url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet",
+        dataType: "jsonp",
+        success: function(data) {
+            try {
+                tabtitle = data.items[0].snippet.title;
+                currenttab.innerHTML = tabtitle;
+                return title;
+            } catch (error) {
+                tabtitle = tab.title;
+                currenttab.innerHTML = tabtitle;
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(textStatus);
+        }
+    });
+}
+
+
 var tabid;
+var tabtitle;
 var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
 
 function writeOutQueue() {
@@ -103,6 +141,7 @@ function nextto(index) {
             });
         }
     });
+
 }
 
 var queueText = document.getElementById('queue');
@@ -113,6 +152,7 @@ searchBar.focus();
 var searchresults = document.getElementById('searchresults');
 var searchlistarea = document.getElementById("searchlistarea");
 var emptytext = document.getElementById("emptytext");
+var currenttab = document.getElementById("currenttab");
 
 window.onload = function() {
     writeOutQueue();
@@ -196,10 +236,10 @@ function getFirst() {
 var timeout = null;
 searchbar.addEventListener('keydown', function(e) {
     if (e.keyCode == 13) {
-        if (searchBar.value=="") {
+        if (searchBar.value == "") {
             next();
         } else {
-            addfirstsearch();            
+            addfirstsearch();
         }
     } else if (searchBar.value != "") {
         clearTimeout(timeout);

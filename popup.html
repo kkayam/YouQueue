@@ -1,178 +1,179 @@
 <!doctype html>
 <html>
-  <head>
-    <title>YouQueue</title>
-    <style type="text/css">
-    body {
-    width: 300px;
-    overflow: hidden;
-    }
-    </style>
-  </head>
-  <body>
-    <meta charset='utf-8'>
-    <style type="text/css">
-    .btn {
-    background-color: white;
-    border-radius: 3px;
-    transition-duration: 0.4s;
-    display: inline-block;
-    cursor: pointer;
-    border: none;
-    width: 49%;
-    height: 50px;
-    vertical-align: middle;
-    user-select: none;
-    }
-    .btn:hover {
-    background-color: #555555;
-    color: white;
-    }
-    .input_container{
-    display: block;
-    text-align: center;
-    }
-    .awsome_input{
-    margin-top: 10px;
-    font-size: 12pt;
-    font-weight: bold;
-    color: grey;
-    border: none;
-    background: transparent;
-    text-align: center;
-    width: 100%;
-    -webkit-transition: all ease-in-out .15s;
-    -o-transition: all ease-in-out .15s;
-    transition: all ease-in-out .15s;
-    }
-    .awsome_input_border{
-    display:inline-block;
-    width:18%;
-    height: 2px;
-    background: #555555;
-    position: relative;
-    top: -10px;
-    -webkit-transition: all ease-in-out .15s;
-    -o-transition: all ease-in-out .15s;
-    transition: all ease-in-out .15s;
-    }
-    .awsome_input:active,
-    .awsome_input:focus{
-    outline: none;
-    color:black;
-    font-size: 16pt;
-    }
-    .awsome_input:active+.awsome_input_border,
-    .awsome_input:focus+.awsome_input_border{
-    width:50%;
-    }
+    <head>
+        <title>YouQueue</title>
+        <style type="text/css">
+        body {
+        width: 300px;
+        overflow: hidden;
+        }
+        </style>
+    </head>
+    <body>
+        <meta charset='utf-8'>
+        <style type="text/css">
+        .btn {
+        background-color: white;
+        border-radius: 3px;
+        transition-duration: 0.4s;
+        display: inline-block;
+        cursor: pointer;
+        border: none;
+        width: 49%;
+        height: 50px;
+        vertical-align: middle;
+        user-select: none;
+        }
+        .btn:hover {
+        background-color: #555555;
+        color: white;
+        }
+        .input_container{
+        display: block;
+        text-align: center;
+        }
+        .awsome_input{
+        margin-top: 10px;
+        font-size: 12pt;
+        font-weight: bold;
+        color: grey;
+        border: none;
+        background: transparent;
+        text-align: center;
+        width: 100%;
+        -webkit-transition: all ease-in-out .15s;
+        -o-transition: all ease-in-out .15s;
+        transition: all ease-in-out .15s;
+        }
+        .awsome_input_border{
+        display:inline-block;
+        width:18%;
+        height: 2px;
+        background: #555555;
+        position: relative;
+        top: -10px;
+        -webkit-transition: all ease-in-out .15s;
+        -o-transition: all ease-in-out .15s;
+        transition: all ease-in-out .15s;
+        }
+        .awsome_input:active,
+        .awsome_input:focus{
+        outline: none;
+        color:black;
+        font-size: 16pt;
+        }
+        .awsome_input:active+.awsome_input_border,
+        .awsome_input:focus+.awsome_input_border{
+        width:50%;
+        }
+        
+        hr.div {
+        width: 200px;
+        color: red;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        user-select: none;
+        }
+        a {
+        font-family: helvetica;
+        font-size: 13pt;
+        font-weight: bold;
+        text-decoration: none;
+        position: relative;
+        display: block;
+        margin-top:10px;
+        color: #444;
+        cursor: pointer;
+        user-select: none;
+        }
+        a.deletebutton {
+        font-size: 8pt;
+        }
+        a.searchelement{
+        font-weight: normal;
+        }
+        a.listobject:after, a.searchelement:after {
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        bottom: -0.15em;
+        left: -.15em;
+        width: calc(100% + .3em);
+        height: calc(100% + .3em);;
+        color:  white;
+        background-color: white;
+        border-radius: 3px;
+        transition-duration: 0.4s;
+        display: inline-block;
+        cursor: pointer;
+        border: none;
+        vertical-align: middle;
+        user-select: none;
+        }
+        a.listobject:hover:after, a.searchelement:hover:after {
+        background-color: #7FFF8E;
+        color: white;
+        }
+        h2.empty
+        {
+        font-size: 35px;
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 9px;
+        text-shadow: -3px 3px 0px #FF00DCFF,
+        -6px 6px 0px #01cccc,
+        -9px 9px 0px #00FF39FF;
+        user-select: none;
+        }
+        h2.head
+        {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        font-size: 25px;
+        -webkit-transition: 0.2s all ease;
+        animation-name: example;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        user-select: none;
+        }
+        @keyframes example {
+        0% {color: black; text-shadow: 0 0 0px black;}
+        50% {color: rgb(255,0,0); text-shadow: 0 0 8px rgb(255,0,0);}
+        100% {color: black; text-shadow: 0 0 0px black;}
+        }
+        table{
+        table-layout: auto;
+        width: 95%;
+        }
+        </style>
+    <header id ="header" align="center"><h2 class="head">YouQueue</h2><hr class="div"></header>
+    <div align="center">
+        <b>📼Now Playing🎵</b>
+        <br>
+        <b id="currenttab" align="center">Nothing</b>
+    </div>
+    <table id="queue">
+        <colgroup>
+        <col width=10%>
+        <col width=90%>
+        </colgroup>
+    </table>
+    <p id="emptytext" align="center"></p>
+    <div align="center">
+        <button class="btn" id="removeQueue">Clear queue</button>
+        <button class="btn" id="nextQueue" rows="2">Next</button>
+    </div>
     
-    hr.div {
-    width: 200px;
-    color: red;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    user-select: none;
-    }
-    a {
-    font-family: helvetica;
-    font-size: 13pt;
-    font-weight: bold;
-    text-decoration: none;
-    position: relative;
-    display: block;
-    margin-top:10px;
-    color: #444;
-    cursor: pointer;
-    user-select: none;
-    }
-
-    a.deletebutton {
-      font-size: 8pt;
-    }
-
-    a.searchelement{
-    font-weight: normal;
-    }
-    a.listobject:after, a.searchelement:after {
-    content: ' ';
-    position: absolute;
-    z-index: -1;
-    bottom: -0.15em;
-    left: -.15em;
-    width: calc(100% + .3em);
-    height: calc(100% + .3em);;
-    color:  white;
-
-    background-color: white;
-    border-radius: 3px;
-    transition-duration: 0.4s;
-    display: inline-block;
-    cursor: pointer;
-    border: none;
-    vertical-align: middle;
-    user-select: none;
-    }
-    a.listobject:hover:after, a.searchelement:hover:after {
-    background-color: #7FFF8E;
-    color: white;
-    }
-    h2.empty
-    {
-    font-size: 35px;
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 9px;
-    text-shadow: -3px 3px 0px #FF00DCFF,
-    -6px 6px 0px #01cccc,
-    -9px 9px 0px #00FF39FF;
-    user-select: none;
-    }
-    h2.head
-    {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-size: 25px;
-    -webkit-transition: 0.2s all ease;
-    animation-name: example;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
-    user-select: none;
-    }
-    @keyframes example {
-    0% {color: black; text-shadow: 0 0 0px black;}
-    50% {color: rgb(255,0,0); text-shadow: 0 0 8px rgb(255,0,0);}
-    100% {color: black; text-shadow: 0 0 0px black;}
-    }
-
-    table{
-    table-layout: auto;
-    width: 95%;
-    }
-    </style>
-  <header id ="header" align="center"><h2 class="head">YouQueue</h2><hr class="div"></header>
-  <table id="queue">
-    <colgroup>
-    <col width=10%>
-    <col width=90%>
-    </colgroup>
-  </table>
-  <p id="emptytext" align="center"></p>
-  <div align="center">
-    <button class="btn" id="removeQueue">Clear queue</button>
-    <button class="btn" id="nextQueue" rows="2">Next</button>
-  </div>
-  
-  <div class="input_container">
-    <img src="infoicon.png" width="20" height="20" title="Enter:&#013;Adds the first video from the results or plays next if the searchbar is empty." style="margin-top: 10px">
-    <input id="searchbar" type="text" class="awsome_input"
-    placeholder="quick add" title="Enter to add"/>
-    <span class="awsome_input_border"/>
-    </div>
-    <div id="searchresults" align="center">
-    </div>
-    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady">  </script>
-    <script src="jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="popup.js"></script>
-  </body>
+    <div class="input_container">
+        <img src="infoicon.png" width="20" height="20" title="Enter:&#013;Adds the first video from the results or plays next if the searchbar is empty." style="margin-top: 10px">
+        <input id="searchbar" type="text" class="awsome_input"
+        placeholder="quick add" title="Enter to add"/>
+        <span class="awsome_input_border"/>
+        </div>
+        <div id="searchresults" align="center">
+        </div>
+        <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady">  </script>
+        <script src="jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="popup.js"></script>
+    </body>
 </html>
