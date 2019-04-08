@@ -180,6 +180,16 @@ messagesRef.onSnapshot(function(doc) {
     doc.data().messages.forEach(function(element, index) {
         chatbox.innerHTML += element + "<br>";
     });
+    var linklist = document.querySelectorAll("a");
+    linklist.forEach(function(element, index) {
+        element.onclick = function() {
+            console.log(element.getAttribute("url"));
+            chrome.tabs.update(tabid, {
+                url: element.getAttribute("url")
+            });
+            //addNext(element.innerHTML, element.getAttribute("url"));
+        };
+    });
 });
 
 
@@ -289,26 +299,34 @@ username.addEventListener('keydown', function(e) {
     }
 });
 musicbutton.onclick = function() {
-                sendChat("<b>"+username.value+" is listening to "+currenttab.innerHTML+"</b>");
-            };
+    var taburl = "";
+    chrome.tabs.query({}, function(tabs) {
+        tabs.forEach(function(tab) {
+            if (tab.id == tabid) {
+                taburl = tab.url;
+                sendChat("<b>" + username.value + " is listening to <a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a></b>");
+            }
+        });
+    });
+};
 
 function sendChat(text) {
     db.runTransaction(function(transaction) {
-            return transaction.get(messagesRef).then(function(doc) {
-                var newmessages = doc.data().messages;
-                newmessages.shift();
-                newmessages.push(text);
-                transaction.update(messagesRef, {
-                    messages: newmessages
-                });
-                return newmessages;
+        return transaction.get(messagesRef).then(function(doc) {
+            var newmessages = doc.data().messages;
+            newmessages.shift();
+            newmessages.push(text);
+            transaction.update(messagesRef, {
+                messages: newmessages
             });
+            return newmessages;
         });
+    });
 }
 
 chatinput.addEventListener('keydown', function(e) {
     if (e.keyCode == 13) {
-        sendChat(username.value+": "+chatinput.value);
+        sendChat(username.value + ": " + chatinput.value);
         chatinput.value = "";
     }
 });
