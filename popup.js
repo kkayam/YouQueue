@@ -16,8 +16,7 @@ function getTabid() {
 }
 
 function updateTabTitle() {
-    chrome.tabs.query({
-    }, function(tabs) {
+    chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
             if (tab.id == tabid) {
                 queryTitle(tab);
@@ -49,11 +48,19 @@ function queryTitle(tab) {
         }
     });
 }
-
-
 var tabid;
 var tabtitle;
-var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
+var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
+
+
+firebase.initializeApp({
+    apiKey: apiKey,
+    authDomain: "queue-237008.firebaseapp.com",
+    projectId: "youtube-queue-237008"
+});
+
+var db = firebase.firestore();
+
 
 function writeOutQueue() {
     emptytext.innerHTML = "";
@@ -141,9 +148,7 @@ function nextto(index) {
             });
         }
     });
-
 }
-
 var queueText = document.getElementById('queue');
 var removeButton = document.getElementById('removeQueue');
 var nextButton = document.getElementById('nextQueue');
@@ -154,10 +159,29 @@ var searchlistarea = document.getElementById("searchlistarea");
 var emptytext = document.getElementById("emptytext");
 var currenttab = document.getElementById("currenttab");
 var currenttabdiv = document.getElementById("currenttabdiv");
+var chatbox = document.getElementById("chatbox");
+var chatinput = document.getElementById("chatinput");
+var username = document.getElementById("username");
 
 window.onload = function() {
     writeOutQueue();
+    chrome.storage.local.get({
+        'username': []
+    }, function(result) {
+        username.value = result.username;
+    });
 };
+
+var messagesRef = db.collection("chat").doc("messages");
+
+messagesRef.onSnapshot(function(doc) {
+    chatbox.innerHTML = ""
+    doc.data().messages.forEach(function(element, index) {
+        chatbox.innerHTML += element + "<br>";
+    });
+});
+
+
 chrome.tabs.onUpdated.addListener(function(updatedtabid, changeinfo, updatedtab) {
     if (updatedtabid == tabid && changeinfo.url != null) {
         writeOutQueue();
@@ -233,7 +257,6 @@ function getFirst() {
         });
     })
 }
-
 var timeout = null;
 searchbar.addEventListener('keydown', function(e) {
     if (e.keyCode == 13) {
@@ -249,11 +272,35 @@ searchbar.addEventListener('keydown', function(e) {
         }, 350);
     }
 });
-
 removeButton.addEventListener('click', function() {
     removeAll()
 });
-
 nextButton.addEventListener('click', function() {
     next()
+});
+
+username.addEventListener('keydown', function(e) {
+    if (e.keyCode == 13) {
+        chrome.storage.local.set({
+            'username': username.value
+        }, function() {});
+
+    }
+});
+
+chatinput.addEventListener('keydown', function(e) {
+    if (e.keyCode == 13) {
+        db.runTransaction(function(transaction) {
+            return transaction.get(messagesRef).then(function(doc) {
+                var newmessages = doc.data().messages;
+                newmessages.shift();
+                newmessages.push(username.value+": "+chatinput.value);
+                chatinput.value = "";
+                transaction.update(messagesRef, {
+                    messages: newmessages
+                });
+                return newmessages;
+            });
+        });
+    }
 });
