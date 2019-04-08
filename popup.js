@@ -53,7 +53,7 @@ function queryTitle(tab) {
 
 var tabid;
 var tabtitle;
-var apiKey = "AIzaSyBzLH4gRgoGJu2hK9ALogIIvRDs_4v7Fec";
+var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 
 function writeOutQueue() {
     emptytext.innerHTML = "";
