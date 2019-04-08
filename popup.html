@@ -150,6 +150,20 @@
         border-collapse: collapse;
         width: 98%;
         }
+        .astext {
+        background:none;
+        border:1px;
+        margin:0;
+        padding:0;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+        .astext:focus {outline:0;}
         </style>
         <!-- This is ze header -->
     <header id ="header" align="center"><h2>YouQueue</h2><hr class="div"></header>
@@ -176,13 +190,23 @@
     </div>
     <div id="searchresults" align="center">
     </div>
-
     <div id="chatbox" align="center"></div>
-    <input id="chatinput" type="text" class="awsome_input"
-    placeholder="Chat"/>
-    <input id="username" type="text" class="awsome_input"
-    placeholder="username"/>
-
+    
+    <table>
+        <tr>
+            <td width="70" style="vertical-align: bottom;">
+                <input id="username" type="text" class="awsome_input"
+                placeholder="username"/>
+            </td>
+            <td style="vertical-align: bottom;">
+                <input id="chatinput" type="text" class="awsome_input"
+                placeholder="Chat" style="text-align: left;" />
+            </td>
+            <td width="25" style="vertical-align: bottom;">
+                <button id="musicbutton" class="astext">🎵</button>
+            </td>
+        </tr>
+    </table>
     <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady">  </script>
     <script src="jquery-3.3.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>

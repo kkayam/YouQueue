@@ -162,6 +162,7 @@ var currenttabdiv = document.getElementById("currenttabdiv");
 var chatbox = document.getElementById("chatbox");
 var chatinput = document.getElementById("chatinput");
 var username = document.getElementById("username");
+var musicbutton = document.getElementById("musicbutton");
 
 window.onload = function() {
     writeOutQueue();
@@ -287,20 +288,27 @@ username.addEventListener('keydown', function(e) {
 
     }
 });
+musicbutton.onclick = function() {
+                sendChat("<b>"+username.value+" is listening to "+currenttab.innerHTML+"</b>");
+            };
 
-chatinput.addEventListener('keydown', function(e) {
-    if (e.keyCode == 13) {
-        db.runTransaction(function(transaction) {
+function sendChat(text) {
+    db.runTransaction(function(transaction) {
             return transaction.get(messagesRef).then(function(doc) {
                 var newmessages = doc.data().messages;
                 newmessages.shift();
-                newmessages.push(username.value+": "+chatinput.value);
-                chatinput.value = "";
+                newmessages.push(text);
                 transaction.update(messagesRef, {
                     messages: newmessages
                 });
                 return newmessages;
             });
         });
+}
+
+chatinput.addEventListener('keydown', function(e) {
+    if (e.keyCode == 13) {
+        sendChat(username.value+": "+chatinput.value);
+        chatinput.value = "";
     }
 });
