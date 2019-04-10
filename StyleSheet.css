@@ -4,21 +4,13 @@ body {
 }
 
 img.next {
-    left: 1em;
+    transform: translateX(-0.15em);
+    transition: transform 0.1s;
 }
 
 img.next:hover {
-    animation : moveright linear 0.1s forwards;
-}
-
-@keyframes moveright {
-    from {
-        transform: translateX(0em);
-    }
-
-    to {
-        transform: translateX(0.2em);
-    }
+    transform: translateX(0.15em);
+    transition: transform 0.1s;
 }
 
 .trash {
@@ -332,6 +324,13 @@ table.queue {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    transform: scale(1);
+    transition: transform 0.1s;
+}
+
+.astext:hover {
+    transform: scale(1.5);
+    transition: transform 0.1s;
 }
 
 .astext:focus {

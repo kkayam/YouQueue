@@ -15,6 +15,20 @@ function getTabid() {
     });
 }
 
+function openLink(url) {
+    if (tabid == "none") {
+        chrome.tabs.create({
+            url: url
+        }, function(tab) {
+            tabid = tab.id;
+        });
+    } else {
+        chrome.tabs.update(tabid, {
+            url: url
+        });
+    }
+}
+
 function addfirstsearch() {
     gapi.client.setApiKey(apiKey);
     gapi.client.load('youtube', 'v3', function() {

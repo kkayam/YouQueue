@@ -121,19 +121,10 @@ function nextto(index) {
         }, function() {
             writeOutQueue();
         });
-        if (tabid == "none") {
-            chrome.tabs.create({
-                url: vidurl
-            }, function(tab) {
-                tabid = tab.id;
-            });
-        } else {
-            chrome.tabs.update(tabid, {
-                url: vidurl
-            });
-        }
+        openLink(vidurl);
     });
 }
+
 
 function deleteindex(index) {
     chrome.storage.local.get({
@@ -174,10 +165,7 @@ messagesRef.onSnapshot(function(doc) {
     var linklist = chatbox.querySelectorAll("a");
     linklist.forEach(function(element, index) {
         element.onclick = function() {
-            console.log(element.getAttribute("url"));
-            chrome.tabs.update(tabid, {
-                url: element.getAttribute("url")
-            });
+            openLink(element.getAttribute("url"));
             //addNext(element.innerHTML, element.getAttribute("url"));
         };
     });
@@ -205,7 +193,10 @@ musicbutton.onclick = function() {
         tabs.forEach(function(tab) {
             if (tab.id == tabid) {
                 taburl = tab.url;
-                sendChat("<b>" + username.value + " is listening to <a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a></b>");
+                if (taburl.includes("watch?v=")) {
+                    sendChat("<b>" + username.value + " is listening to <a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a></b>");
+                }
+
             }
         });
     });
