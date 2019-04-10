@@ -59,6 +59,7 @@ function updateTabTitle() {
     currenttabdiv.style.display = 'none'
 }
 
+
 function writeOutQueue() {
     queue.style.display = 'none';
     emptytext.style.display = 'none';
@@ -201,7 +202,6 @@ musicbutton.onclick = function() {
         });
     });
 };
-
 
 chatbutton.onclick = function() {
     if (chat.style.display == 'block') {
