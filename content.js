@@ -76,6 +76,8 @@ function injectButton(dismissable) {
     button.className = "addbutton";
     button.appendChild(img);
     button.onclick = function() {
+        button.style.background = '#ff5f5f';
+        button.style.borderColor = '#ff5f5f';
         addNext(title.getAttribute("title"), "https://www.youtube.com" + thumbnail.getAttribute("href"));
     };
     var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
