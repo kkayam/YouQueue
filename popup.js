@@ -74,6 +74,7 @@ function writeOutQueue() {
         }
         queue.style.display = 'block';
         result.queue.forEach(function(element, index) {
+            console.log(element[1]);
             queueText.innerHTML += "<tr><td width = '25px'><a class='deletebutton' align='center' index='" + index + "'>&#10006;</a></td><td width='4px'></td> <td><a class='listobject' align='center' index='" + index + "'>" + element[0] + "</a></td></tr>";
         });
         var queuelist = queueText.querySelectorAll(".listobject");

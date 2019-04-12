@@ -1,5 +1,27 @@
+var styles = 
+".addbutton {vertical-align:bottom;opacity:0.7;border-width:2.5px;width: 25px;height: 25px;left: 5px;bottom: 5px;border-radius:70px;background: red;border-color: #b10101;padding: 0;position: absolute;z-index: 1;}"+
+".addbutton:focus {outline:0;}"+
+".addbutton:hover {opacity:1;}";
+
+
+
+
+var styleTag = document.createElement('style');
+if (styleTag.styleSheet)
+    styleTag.styleSheet.cssText = styles;
+else
+    styleTag.appendChild(document.createTextNode(styles));
+
+document.getElementsByTagName('head')[0].appendChild(styleTag);
+
 // Get the videoplayer
-var vid = document.getElementsByClassName('video-stream')[0];
+var vid = document.querySelectorAll(".video-stream");
+if (vid.length > 0) {
+    // Play next when video ends
+    vid[0].onended = function(e) {
+        next()
+    }
+}
 
 // Broadcast tabid to other scripts
 chrome.runtime.sendMessage({
@@ -27,7 +49,45 @@ function next() {
     });
 }
 
-// Play next when video ends
-vid.onended = function(e) {
-    next()
+// Add next to local queue storage
+function addNext(name, nexturl) {
+    var videoqueue;
+    chrome.storage.local.get({
+        'queue': []
+    }, function(result) {
+        videoqueue = result.queue;
+        videoqueue.push([name, nexturl]);
+        chrome.storage.local.set({
+            'queue': videoqueue
+        }, function() {});
+    });
 }
+
+// Add button to div called dismissable
+function injectButton(dismissable) {
+    var thumbnail = dismissable.querySelector("#thumbnail");
+    var title = dismissable.querySelector("#video-title");
+    var img = document.createElement("img");
+    img.src = chrome.extension.getURL("plus.png");
+    img.style.width = "80%";
+    img.style.height = "80%";
+    img.style.verticalAlign = 'middle';
+    var button = document.createElement("button");
+    button.className = "addbutton";
+    button.appendChild(img);
+    button.onclick = function() {
+        addNext(title.getAttribute("title"), "https://www.youtube.com" + thumbnail.getAttribute("href"));
+    };
+    var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
+    thumbnailoverlay.appendChild(button);
+}
+
+// Inject buttons on all dismissables on startup
+document.querySelectorAll("#dismissable").forEach(function(dismissable) {
+    injectButton(dismissable);
+});
+
+// When the "dismissable" div arrives, inject button
+document.arrive("#dismissable", function() {
+    injectButton(this);
+});
