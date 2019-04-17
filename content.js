@@ -70,11 +70,15 @@ function injectButton(dismissable) {
     button.onclick = function() {
         button.style.background = '#ff5f5f';
         button.style.borderColor = '#ff5f5f';
-        addNext(title.getAttribute("title"), "https://www.youtube.com" + thumbnail.getAttribute("href"));
+        addNext(title.getAttribute("title").trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
     };
     thumbnailoverlay.appendChild(button);
     return 1;
 }
+
+document.querySelectorAll("#dismissable").forEach(function(dismissable) {   
+    injectButton(dismissable);  
+});
 
 // When the "dismissable" div arrives, inject button
 document.arrive("#dismissable", function() {

@@ -1,6 +1,6 @@
 var tabid;
 var tabtitle;
-var apiKey = "AIzaSyBHV54SnT1YGS_C_ikh2SwFtnOJAOqk5l8";
+var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 
 // Initialize firestore
 firebase.initializeApp({
@@ -61,8 +61,6 @@ function updateTabTitle() {
 
 
 function writeOutQueue() {
-    queue.style.display = 'none';
-    emptytext.style.display = 'none';
     getTabid();
     queueText.innerHTML = "";
     chrome.storage.local.get({
@@ -70,24 +68,42 @@ function writeOutQueue() {
     }, function(result) {
         if (result.queue.length == 0) {
             emptytext.style.display = 'block';
+            queue.style.display = 'none';
             return;
         }
+        emptytext.style.display = 'none';
         queue.style.display = 'block';
         result.queue.forEach(function(element, index) {
-            console.log(element[1]);
-            queueText.innerHTML += "<tr><td width = '25px'><a class='deletebutton' align='center' index='" + index + "'>&#10006;</a></td><td width='4px'></td> <td><a class='listobject' align='center' index='" + index + "'>" + element[0] + "</a></td></tr>";
-        });
-        var queuelist = queueText.querySelectorAll(".listobject");
-        queuelist.forEach(function(element, index) {
-            element.onclick = function() {
-                nextto(index);
-            };
-        });
-        var deletebuttons = queueText.querySelectorAll(".deletebutton");
-        deletebuttons.forEach(function(element, index) {
-            element.onclick = function() {
+            var row = document.createElement("tr");
+            row.className = "queuerow";
+            row.width = '100%';
+            row.align = 'middle';
+            row.style.alignContent = 'middle';
+
+            var deletebutton = document.createElement("td");
+            deletebutton.className = "deletebtn";
+            deletebutton.innerHTML = "&#10006;";
+            deletebutton.onclick = function() {
                 deleteindex(index);
             };
+
+            var videobutton = document.createElement("td");
+            videobutton.className = "videobtn";
+            videobutton.innerHTML = element[0];
+            videobutton.width = '100%';
+            videobutton.onclick = function() {
+                nextto(index);
+            };
+            videobutton.onmouseenter = function() {
+                deletebutton.style.background = '#7FFF8E';
+            }
+            videobutton.onmouseleave = function() {
+                deletebutton.style.background = 'initial';
+            }
+
+            row.appendChild(deletebutton);
+            row.appendChild(videobutton);
+            queue.appendChild(row);
         });
     });
 }
@@ -101,9 +117,7 @@ function addNext(name, nexturl) {
         videoqueue.push([name, nexturl]);
         chrome.storage.local.set({
             'queue': videoqueue
-        }, function() {
-            writeOutQueue();
-        });
+        }, function() {});
     });
 }
 
@@ -120,9 +134,7 @@ function nextto(index) {
         videoqueue.splice(index, 1);
         chrome.storage.local.set({
             'queue': videoqueue
-        }, function() {
-            writeOutQueue();
-        });
+        }, function() {});
         openLink(vidurl);
     });
 }
@@ -136,9 +148,7 @@ function deleteindex(index) {
         videoqueue.splice(index, 1);
         chrome.storage.local.set({
             'queue': videoqueue
-        }, function() {
-            writeOutQueue();
-        });
+        }, function() {});
     });
 }
 
@@ -219,11 +229,6 @@ chatbutton.onclick = function() {
     }, function() {});
 }
 
-chrome.tabs.onUpdated.addListener(function(updatedtabid, changeinfo, updatedtab) {
-    if (updatedtabid == tabid && changeinfo.url != null) {
-        writeOutQueue();
-    }
-});
 
 var timeout = null;
 searchbar.addEventListener('keydown', function(e) {
@@ -262,4 +267,13 @@ chatinput.addEventListener('keydown', function(e) {
         sendChat(username.value + ": " + chatinput.value);
         chatinput.value = "";
     }
+});
+
+
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+    // if (changes.queue.newValue.length == 0) {
+    //     writeOutQueue();
+    // }
+    // console.log(changes.queue.newValue);
+    writeOutQueue();
 });

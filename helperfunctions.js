@@ -2,7 +2,6 @@ function removeAll() {
     chrome.storage.local.set({
         'queue': []
     }, function() {
-        writeOutQueue();
     });
 }
 
@@ -45,21 +44,17 @@ function makeRequest(q) {
     });
     request.execute(function(response) {
         var srchItems = response.result.items;
-        var vidurls = [];
-        var vidtitles = [];
         searchresults.innerHTML = "";
         $.each(srchItems, function(index, item) {
-            vidTitle = item.snippet.title;
-            vidtitles.push(vidTitle);
-            vidUrl = "https://www.youtube.com/watch?v=" + item.id.videoId;
-            vidurls.push(vidUrl);
-            searchresults.innerHTML += "<a class='searchelement'>" + vidTitle + "</a>";
-        });
-        var searchlist = document.querySelectorAll(".searchelement");
-        searchlist.forEach(function(element, index) {
-            element.onclick = function() {
-                addNext(vidtitles[index], vidurls[index]);
+            var vidTitle = item.snippet.title;
+            var vidUrl = "https://www.youtube.com/watch?v=" + item.id.videoId;
+            var row = document.createElement("p");
+            row.className = "searchobj";
+            row.innerHTML = vidTitle;
+            row.onclick = function() {
+                addNext(vidTitle, vidUrl);
             };
+            searchresults.appendChild(row);
         });
     })
 }

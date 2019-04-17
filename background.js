@@ -1,5 +1,5 @@
 var tabid = "none";
-var apiKey = "AIzaSyBHV54SnT1YGS_C_ikh2SwFtnOJAOqk5l8";
+var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 // Start by setting the queuetab to none and storing it
 saveTabInfo();
 

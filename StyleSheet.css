@@ -120,6 +120,7 @@ img.next:hover {
     text-align: center;
     transition: all 0.15s;
     width: 100%;
+    background: #F2F2F2;
     border-radius: 5px;
 }
 
@@ -210,55 +211,47 @@ a.currenttab {
     font: 'droid sans';
 }
 
-a.listobject,
-a.searchelement,
-a.deletebutton {
-    font-family: helvetica;
-    font-size: 13pt;
+.queuerow {
+    border-radius: 6px;
+}
+
+.deletebtn, .videobtn, .searchobj {
+    text-align: center;
     font-weight: bold;
-    text-decoration: none;
-    position: relative;
-    display: block;
-    margin-top: 10px;
+    font-size: 12pt;
+    border-radius: 5px;
+    cursor: pointer;
     color: #444;
-    cursor: pointer;
-    user-select: none;
+    margin: 0;
+    padding: 4px;
+}
+.deletebtn {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    width: 25px;
 }
 
-a.searchelement {
-    font-weight: normal;
+.videobtn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
-a.listobject:after,
-a.searchelement:after,
-a.deletebutton:after {
-    content: ' ';
-    position: absolute;
-    z-index: -2;
-    bottom: -0.15em;
-    left: -.15em;
-    width: calc(100% + .3em);
-    height: calc(100% + .3em);
-    ;
+.deletebtn:hover {
+    background-color: #DF4F1FFF !important;
+}
+
+.deletebtn:hover + .videobtn{
+    background-color: #DF4F1FFF;
     color: white;
-    background-color: white;
-    border-radius: 3px;
-    transition-duration: 0.4s;
-    display: inline-block;
-    cursor: pointer;
-    border: none;
-    vertical-align: middle;
-    user-select: none;
 }
 
-a.listobject:hover:after,
-a.searchelement:hover:after {
+.videobtn:hover {
     background-color: #7FFF8E;
     color: white;
 }
 
-a.deletebutton:hover:after {
-    background-color: #DF4F1FFF;
+.searchobj:hover {
+    background-color: #7FFF8E;
     color: white;
 }
 
@@ -302,7 +295,6 @@ h2.head {
 }
 
 table.queue {
-    table-layout: fixed;
     border-collapse: collapse;
     width: 98%;
 }
