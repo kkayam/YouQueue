@@ -55,17 +55,12 @@ function addNext(name, nexturl) {
 function injectButton(dismissable) {
     var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
     if (thumbnailoverlay == null || thumbnailoverlay.querySelector(".addbutton") != null) {
-        if (thumbnailoverlay == null) {
-            return 0;
-        } else if (thumbnailoverlay.querySelector(".addbutton") != null) {
-            console.log("dublicate button");
-        }
         return 0;
     }
     var thumbnail = dismissable.querySelector("#thumbnail");
     var title = dismissable.querySelector("#video-title");
     var img = document.createElement("img");
-    img.src = chrome.extension.getURL("plus.png");
+    img.src = chrome.extension.getURL("images/plus.png");
     img.style.width = "80%";
     img.style.height = "80%";
     img.style.verticalAlign = 'middle';
