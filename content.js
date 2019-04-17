@@ -1,18 +1,5 @@
-var styles = 
-".addbutton {vertical-align:bottom;opacity:0.7;border-width:2.5px;width: 25px;height: 25px;left: 5px;bottom: 5px;border-radius:70px;background: red;border-color: #b10101;padding: 0;position: absolute;z-index: 1;}"+
-".addbutton:focus {outline:0;}"+
-".addbutton:hover {opacity:1;}";
-
-
-
-
-var styleTag = document.createElement('style');
-if (styleTag.styleSheet)
-    styleTag.styleSheet.cssText = styles;
-else
-    styleTag.appendChild(document.createTextNode(styles));
-
-document.getElementsByTagName('head')[0].appendChild(styleTag);
+var cached = [];
+cached.push(location.href);
 
 // Get the videoplayer
 var vid = document.querySelectorAll(".video-stream");
@@ -63,8 +50,18 @@ function addNext(name, nexturl) {
     });
 }
 
+
 // Add button to div called dismissable
 function injectButton(dismissable) {
+    var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
+    if (thumbnailoverlay == null || thumbnailoverlay.querySelector(".addbutton") != null) {
+        if (thumbnailoverlay == null) {
+            return 0;
+        } else if (thumbnailoverlay.querySelector(".addbutton") != null) {
+            console.log("dublicate button");
+        }
+        return 0;
+    }
     var thumbnail = dismissable.querySelector("#thumbnail");
     var title = dismissable.querySelector("#video-title");
     var img = document.createElement("img");
@@ -80,14 +77,9 @@ function injectButton(dismissable) {
         button.style.borderColor = '#ff5f5f';
         addNext(title.getAttribute("title"), "https://www.youtube.com" + thumbnail.getAttribute("href"));
     };
-    var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
     thumbnailoverlay.appendChild(button);
+    return 1;
 }
-
-// Inject buttons on all dismissables on startup
-document.querySelectorAll("#dismissable").forEach(function(dismissable) {
-    injectButton(dismissable);
-});
 
 // When the "dismissable" div arrives, inject button
 document.arrive("#dismissable", function() {

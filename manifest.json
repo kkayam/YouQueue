@@ -24,6 +24,8 @@
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.gstatic.com/ https://ajax.googleapis.com https://*.firebaseio.com https://www.googleapis.com/ https://apis.google.com; object-src 'self'",
     "content_scripts": [{
         "matches": ["https://www.youtube.com/*"],
+        "css": ["contentCSS.css"],
+        "run_at": "document_start",
         "js": ["arrive.min.js","content.js"]
     }],
     "web_accessible_resources": [
