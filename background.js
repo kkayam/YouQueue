@@ -60,6 +60,7 @@ chrome.contextMenus.create({
     documentUrlPatterns: ["https://www.youtube.com/*"]
 });
 
+// LISTENERS
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "playnext") {
         addNext(info, tab);
@@ -70,12 +71,16 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     }
 });
 
-// LISTENERS
 // if the queue tab is closed
 chrome.tabs.onRemoved.addListener(function(closedtabid, removed) {
     if (closedtabid == tabid) {
-        tabid = "none";
-        saveTabInfo();
+        chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
+            tabid = "none";
+            if (tabs.length > 0) {
+                tabid = tabs[0].id;
+            }
+            saveTabInfo();
+        });
     }
 });
 
@@ -84,5 +89,5 @@ chrome.runtime.onMessage.addListener(
     function(msg, sender, sendResponse) {
         if (msg.type == "tabid" && tabid == "none")
             tabid = sender.tab.id;
-        saveTabInfo();
+            saveTabInfo();
     });

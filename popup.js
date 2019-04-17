@@ -34,6 +34,7 @@ var chatbutton = document.getElementById("chatbutton");
 
 
 window.onload = function() {
+    getTabid();
     writeOutQueue();
 
     chrome.storage.local.get({
@@ -50,8 +51,9 @@ function updateTabTitle() {
     chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
             if (tab.id == tabid) {
-                // The function below gets the tab title and writes it under "Now Playing"
-                queryTitle(tab);
+                currenttabdiv.style.display = 'block'
+                var title = tab.title.replace(/ *\(\d{0,2}\+?\) */, "").replace(" - YouTube", "");
+                currenttab.innerHTML = title;
                 return;
             }
         });
@@ -61,7 +63,6 @@ function updateTabTitle() {
 
 
 function writeOutQueue() {
-    getTabid();
     queueText.innerHTML = "";
     chrome.storage.local.get({
         'queue': []
@@ -206,7 +207,9 @@ musicbutton.onclick = function() {
             if (tab.id == tabid) {
                 taburl = tab.url;
                 if (taburl.includes("watch?v=")) {
-                    sendChat("<b>" + username.value + " is listening to <a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a></b>");
+                    var b = document.createElement("b");
+                    b.innerHTML = username.value + " is listening to "+"<a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a>";
+                    sendChat(b.outerHTML);
                 }
 
             }
@@ -254,12 +257,10 @@ nextButton.addEventListener('click', function() {
     next()
 });
 
-username.addEventListener('keydown', function(e) {
-    if (e.keyCode == 13) {
-        chrome.storage.local.set({
-            'username': username.value
-        }, function() {});
-    }
+username.addEventListener('focusout', function(e) {
+    chrome.storage.local.set({
+        'username': username.value
+    }, function() {});
 });
 
 chatinput.addEventListener('keydown', function(e) {
@@ -271,9 +272,22 @@ chatinput.addEventListener('keydown', function(e) {
 
 
 chrome.storage.onChanged.addListener(function(changes, areaName) {
-    // if (changes.queue.newValue.length == 0) {
-    //     writeOutQueue();
-    // }
-    // console.log(changes.queue.newValue);
-    writeOutQueue();
+    if (changes.queue) {
+        writeOutQueue();
+    }
+    if (changes.tab) {
+        tabid = changes.tab.newValue;
+        updateTabTitle();
+    }
 });
+
+
+chrome.tabs.onUpdated.addListener(
+    function(changedtabid, changeInfo, tab) {
+        if (changeInfo.title) {
+            if (changedtabid == tabid) {
+                updateTabTitle();
+            }
+        }
+    }
+);
