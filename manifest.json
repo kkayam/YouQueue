@@ -3,7 +3,7 @@
 
     "name": "YOUTUBE QUEUE",
     "description": "Queue youtube videos and keep the performance",
-    "version": "4.600",
+    "version": "4.601",
     "permissions": [
         "https://www.youtube.com/*",
         "https://www.googleapis.com/*",
