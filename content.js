@@ -1,40 +1,28 @@
 var cached = [];
 cached.push(location.href);
 
+
 // Get the videoplayer
 var vid = document.querySelectorAll(".video-stream");
 if (vid.length > 0) {
     // Play next when video ends
     vid[0].onended = function(e) {
-        next()
+        nextMessage()
     }
+}
+
+// Tell the background that the video is done
+function nextMessage() {
+    chrome.runtime.sendMessage({
+        type: "next"
+    });
 }
 
 // Broadcast tabid to other scripts
 chrome.runtime.sendMessage({
-    type: "tabid"
-});
-
-// Play next when video ends
-function next() {
-    var videoqueue;
-    // Get queue from storage
-    chrome.storage.local.get({
-        'queue': []
-    }, function(result) {
-        videoqueue = result.queue;
-        // Get first video
-        var vidurl = videoqueue[0][1];
-        // Shift queue (remove the first video)
-        videoqueue.shift();
-        // Store shifted queue
-        chrome.storage.local.set({
-            'queue': videoqueue
-        }, function() {});
-        // Set url to video url
-        window.location.href = vidurl;
+        type: "tabid"
     });
-}
+
 
 // Add next to local queue storage
 function addNext(name, nexturl) {
@@ -76,8 +64,8 @@ function injectButton(dismissable) {
     return 1;
 }
 
-document.querySelectorAll("#dismissable").forEach(function(dismissable) {   
-    injectButton(dismissable);  
+document.querySelectorAll("#dismissable").forEach(function(dismissable) {
+    injectButton(dismissable);
 });
 
 // When the "dismissable" div arrives, inject button

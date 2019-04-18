@@ -87,7 +87,39 @@ chrome.tabs.onRemoved.addListener(function(closedtabid, removed) {
 // if the background script receives a message (probably from the content script)
 chrome.runtime.onMessage.addListener(
     function(msg, sender, sendResponse) {
-        if (msg.type == "tabid" && tabid == "none")
+        if (msg.type == "tabid" && tabid == "none") {
             tabid = sender.tab.id;
             saveTabInfo();
+        } else if (msg.type == "next" && sender.tab.id == tabid) {
+            next(tabid);
+        }
     });
+
+// Play next when video ends
+function next(tabtoupdate) {
+    var videoqueue;
+    // Get queue from storage
+    chrome.storage.local.get({
+        'queue': []
+    }, function(result) {
+        videoqueue = result.queue;
+        // Get first video
+        var vidurl = videoqueue[0][1];
+        // Shift queue (remove the first video)
+        videoqueue.shift();
+        // Store shifted queue
+        chrome.storage.local.set({
+            'queue': videoqueue
+        }, function() {});
+        // Set url to video url
+        chrome.tabs.update(tabtoupdate, {
+            url: vidurl
+        });
+    });
+}
+
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+    if (changes.tab) {
+        tabid = changes.tab.newValue;
+    }
+});

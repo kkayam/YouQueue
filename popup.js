@@ -1,4 +1,6 @@
 var tabid;
+// var tabids;
+// var tabidsindex;
 var tabtitle;
 var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 
@@ -36,6 +38,8 @@ var chatbutton = document.getElementById("chatbutton");
 window.onload = function() {
     getTabid();
     writeOutQueue();
+    // tabids = getYoutubeTabids();
+    // tabidsindex = tabids.indexOf(tabid);
 
     chrome.storage.local.get({
         'username': [],
@@ -46,6 +50,14 @@ window.onload = function() {
     });
 };
 
+
+function getYoutubeTabids() {
+    chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
+        if (tabs.length > 0) {
+            return tabs.map(x => x.id);
+        }
+    });
+}
 
 function updateTabTitle() {
     chrome.tabs.query({}, function(tabs) {
@@ -208,7 +220,7 @@ musicbutton.onclick = function() {
                 taburl = tab.url;
                 if (taburl.includes("watch?v=")) {
                     var b = document.createElement("b");
-                    b.innerHTML = username.value + " is listening to "+"<a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a>";
+                    b.innerHTML = username.value + " is listening to " + "<a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a>";
                     sendChat(b.outerHTML);
                 }
 
