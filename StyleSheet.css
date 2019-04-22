@@ -1,6 +1,7 @@
 body {
     width: 300px;
     overflow: hidden;
+    margin: 0;
 }
 
 img.next {
@@ -110,7 +111,6 @@ img.next:hover {
     display: inline-block;
     padding: 0.5em 3em;
     border: 0;
-    margin: 0 0.3em 0.3em 0;
     background: #FFF;
     box-sizing: border-box;
     text-decoration: none;
@@ -120,9 +120,10 @@ img.next:hover {
     color: #000;
     text-align: center;
     transition: all 0.15s;
-    width: 100%;
+    width: 90%;
     background: #F2F2F2;
     border-radius: 5px;
+    margin-bottom: 4px;
 }
 
 .chatbutton:focus {
