@@ -13,6 +13,7 @@ img.next:hover {
     transition: transform 0.1s;
 }
 
+
 .trash {
     background: #000;
     width: 66px;
@@ -300,8 +301,20 @@ table.queue {
 }
 
 .chatlink {
-    color: blue;
+    color: #23A6A8FF;
     cursor: pointer;
+}
+
+.chatlinkparent {
+    display: inline-block;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatlinkparent:hover {
+    white-space: initial;
 }
 
 .astext {
