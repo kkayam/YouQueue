@@ -33,6 +33,8 @@ var username = document.getElementById("username");
 var musicbutton = document.getElementById("musicbutton");
 var chat = document.getElementById("chat");
 var chatbutton = document.getElementById("chatbutton");
+var chatbuttonimg = chatbutton.querySelector("img");
+
 
 
 window.onload = function() {
@@ -47,6 +49,7 @@ window.onload = function() {
     }, function(result) {
         username.value = result.username;
         chat.style.display = result.chatdisplay;
+        if (result.chatdisplay=="block") chatbuttonimg.style.transform = 'rotate(180deg)';
     });
 };
 
@@ -171,7 +174,8 @@ function keyWordsearch(q) {
         searchresults.innerHTML = "";
         return;
     } else if (searchbar.value == "credits:") {
-        searchresults.innerHTML = "<a>Creator: Koray M Kaya <br> Beta testers: Sabeen and Haris <br><font size=17pt>😊</font></a>";
+        searchresults.innerHTML = "<a>Creator: Koray M Kaya <br> Beta testers: Sabeen and Haris <br><font size=17pt>😊</font></a>"+
+        '<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>';
         return;
     }
     gapi.client.setApiKey(apiKey);
@@ -229,16 +233,15 @@ musicbutton.onclick = function() {
     });
 };
 
+
 chatbutton.onclick = function() {
     if (chat.style.display == 'block') {
         chat.style.display = 'none';
-        chrome.storage.local.set({
-            'chat': false
-        }, function() {});
+        chatbuttonimg.style.transform = '';
     } else {
         chat.style.display = 'block';
+        chatbuttonimg.style.transform = 'rotate(180deg)';
     }
-
     chrome.storage.local.set({
         'chatdisplay': chat.style.display
     }, function() {});
