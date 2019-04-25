@@ -83,12 +83,12 @@ function writeOutQueue() {
         'queue': []
     }, function(result) {
         if (result.queue.length == 0) {
-            emptytext.style.display = 'block';
+            emptytext.style.display = 'initial';
             queue.style.display = 'none';
             return;
         }
         emptytext.style.display = 'none';
-        queue.style.display = 'block';
+        queue.style.display = 'initial';
         result.queue.forEach(function(element, index) {
             var row = document.createElement("tr");
             row.className = "queuerow";

@@ -9,16 +9,20 @@
     <meta charset='utf-8'>
     <link href="StyleSheet.css" rel="stylesheet" type="text/css">
     <!-- This is the now playing text -->
-    <div align="center" id="currenttabdiv" style="display: none;">
+    <div align="center" id="currenttabdiv" style="display: none; margin-top: 10px;">
         <b>📼Now Playing🎵</b>
         <br>
         <a class="currenttab" id="currenttab" align="center">Nothing</a>
     </div>
+    <img src="images/infoicon.png" width="10" height="10" title="Shortcuts:
+    Enter:  Adds the first video from the results or plays next if the searchbar is empty when the searchbar is selected." style="top: 5px;left: 5px;position: absolute;">
     <br>
     <!-- This is the queued videos -->
-    <table id="queue" class="queue" align="center" width="100%"></table>
-    <h2 class='empty' id="emptytext" align="center">😓Empty😓</h2>
-    <!-- This is the buttons -->
+    <div align="center" style="min-height:50px;">
+        <table id="queue" class="queue" align="center" width="100%"></table>
+        <h2 class='empty' id="emptytext" align="center">😓Empty😓</h2>
+    </div>
+    <!-- This is the control buttons for the queue -->
     <table align="center" width="100%">
         <tr>
             <td class="btnbg" width="50%" align="center">
@@ -33,14 +37,18 @@
         </tr>
     </table>
     <!-- This is the searchbar -->
-    <div class="input_container" style="height: 7em;">
-        <img src="images/infoicon.png" width="20" height="20" title="Enter:&#013;Adds the first video from the results or plays next if the searchbar is empty." style="margin-top: 10px">
-        <input id="searchbar" type="text" class="awsome_input" placeholder="search videos here!" title="Enter to add" />
-        <span class="awsome_input_border" />
+    <div class="input_container">
+        <input id="searchbar" type="text" class="awsome_input" placeholder="search videos here!" />
+        <!-- <span class="awsome_input_border"></span> -->
     </div>
     <div id="searchresults" align="center">
     </div>
     <!-- Chatrelated -->
+    <div align="center">
+        <button id="chatbutton" class="chatbutton">
+            <img class="clickrotate" align="center" src="images/downarrow.png" width="10" height="10">
+        </button>
+    </div>
     <div id="chat" style="display: none;">
         <div id="chatbox" align="center" style="width: 100%; background: #F2F2F2;"></div>
         <table align="center">
@@ -56,12 +64,6 @@
                 </td>
             </tr>
         </table>
-    </div>
-
-    <div align="center">
-        <button id="chatbutton" class="chatbutton">
-                <img class="clickrotate" align="center" src="images/downarrow.png" width="10" height="10">
-        </button>
     </div>
     <!-- Scripts -->
     <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
