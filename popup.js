@@ -17,7 +17,7 @@ var db = firebase.firestore();
 var messagesRef = db.collection("chat").doc("messages");
 
 // Elements in html
-var queueText = document.getElementById('queue');
+var queue = document.getElementById('queue');
 var removeButton = document.getElementById('removeQueue');
 var nextButton = document.getElementById('nextQueue');
 var searchBar = document.getElementById('searchbar');
@@ -35,7 +35,20 @@ var chat = document.getElementById("chat");
 var chatbutton = document.getElementById("chatbutton");
 var chatbuttonimg = chatbutton.querySelector("img");
 
-
+sortable('.queue', {
+    forcePlaceholderSize: true
+})[0].addEventListener('sortupdate', function(e) {
+    chrome.storage.local.get({
+        'queue': []
+    }, function(result) {
+        var videoqueue = result.queue;
+        var item = videoqueue.splice(e.detail.origin.index, 1);
+        videoqueue.splice(e.detail.destination.index,0,item[0]);
+        chrome.storage.local.set({
+            'queue': videoqueue
+        }, function() {});
+    });
+});;
 
 window.onload = function() {
     getTabid();
@@ -49,7 +62,7 @@ window.onload = function() {
     }, function(result) {
         username.value = result.username;
         chat.style.display = result.chatdisplay;
-        if (result.chatdisplay=="block") chatbuttonimg.style.transform = 'rotate(180deg)';
+        if (result.chatdisplay == "block") chatbuttonimg.style.transform = 'rotate(180deg)';
     });
 };
 
@@ -78,7 +91,7 @@ function updateTabTitle() {
 
 
 function writeOutQueue() {
-    queueText.innerHTML = "";
+    queue.innerHTML = "";
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
@@ -90,23 +103,23 @@ function writeOutQueue() {
         emptytext.style.display = 'none';
         queue.style.display = 'initial';
         result.queue.forEach(function(element, index) {
-            var row = document.createElement("tr");
+            var row = document.createElement("li");
             row.className = "queuerow";
             row.width = '100%';
             row.align = 'middle';
+            row.draggable = "true";
             row.style.alignContent = 'middle';
 
-            var deletebutton = document.createElement("td");
+            var deletebutton = document.createElement("btn");
             deletebutton.className = "deletebtn";
             deletebutton.innerHTML = "&#10006;";
             deletebutton.onclick = function() {
                 deleteindex(index);
             };
 
-            var videobutton = document.createElement("td");
+            var videobutton = document.createElement("btn");
             videobutton.className = "videobtn";
             videobutton.innerHTML = element[0];
-            videobutton.width = '100%';
             videobutton.onclick = function() {
                 nextto(index);
             };
@@ -174,8 +187,8 @@ function keyWordsearch(q) {
         searchresults.innerHTML = "";
         return;
     } else if (searchbar.value == "credits:") {
-        searchresults.innerHTML = "<a>Creator: Koray M Kaya <br> Beta testers: Sabeen and Haris <br><font size=17pt>😊</font></a>"+
-        '<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>';
+        searchresults.innerHTML = "<a>Creator: Koray M Kaya <br> Beta testers: Sabeen and Haris <br><font size=17pt>😊</font></a>" +
+            '<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>';
         return;
     }
     gapi.client.setApiKey(apiKey);

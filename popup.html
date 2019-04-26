@@ -21,7 +21,8 @@
     <br>
     <!-- This is the queued videos -->
     <div align="center" style="min-height:50px;">
-        <table id="queue" class="queue" align="center" width="100%"></table>
+        <ul class="queue" id="queue" width="100%"></ul>
+        <!-- <table class="queue" align="center" width="100%"><tbody id="queue"></tbody></table> -->
         <h2 class='empty' id="emptytext" align="center">😓Empty😓</h2>
     </div>
     <!-- This is the control buttons for the queue -->
@@ -70,6 +71,7 @@
     <!-- Scripts -->
     <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
     <script src="jquery-3.3.1.min.js"></script>
+    <script src="html5sortable.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
     <script type="text/javascript" src="helperfunctions.js"></script>

@@ -5,6 +5,82 @@ body {
     background: white;
 }
 
+ul.queue {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    width: 100%;
+    background: grey;
+}
+
+.queuerow {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: table;
+}
+
+
+.deletebtn,
+.videobtn,
+.searchobj {
+    text-align: center;
+    font-weight: bold;
+    font-size: 12pt;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #444;
+    margin: 0;
+    padding: 4px;
+    display: table-cell;
+}
+
+.updownarrow {
+    display: table-cell;
+}
+
+.deletebtn {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    width: 25px;
+}
+
+.videobtn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.deletebtn:hover {
+    background-color: #DF4F1FFF !important;
+}
+
+.deletebtn:hover+.videobtn {
+    background-color: #DF4F1FFF;
+    color: white;
+}
+
+.videobtn:hover {
+    background-color: #7FFF8E;
+    color: white;
+}
+
+.searchobj {
+    display: table-row;
+}
+
+.searchobj:hover {
+    background-color: #7FFF8E;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
 img.next {
     transform: translateX(-0.15em);
     transition: transform 0.1s;
@@ -230,49 +306,6 @@ a.currenttab {
 
 .queuerow {
     border-radius: 6px;
-}
-
-.deletebtn,
-.videobtn,
-.searchobj {
-    text-align: center;
-    font-weight: bold;
-    font-size: 12pt;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #444;
-    margin: 0;
-    padding: 4px;
-}
-
-.deletebtn {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    width: 25px;
-}
-
-.videobtn {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-}
-
-.deletebtn:hover {
-    background-color: #DF4F1FFF !important;
-}
-
-.deletebtn:hover+.videobtn {
-    background-color: #DF4F1FFF;
-    color: white;
-}
-
-.videobtn:hover {
-    background-color: #7FFF8E;
-    color: white;
-}
-
-.searchobj:hover {
-    background-color: #7FFF8E;
-    color: white;
 }
 
 h2.empty {
