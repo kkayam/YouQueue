@@ -233,6 +233,8 @@ img.clickrotate {
 .input_container {
     display: block;
     text-align: center;
+    min-height: 25px;
+    padding-bottom: 5px;
 }
 
 .awsome_input,
@@ -252,6 +254,11 @@ img.clickrotate {
     color: black;
 }
 
+
+.awsome_input {
+    margin-bottom: 5px;
+}
+
 .awsome_input_border {
     display: inline-block;
     width: 18%;
@@ -269,15 +276,13 @@ img.clickrotate {
 .awesome_chatinput:focus {
     outline: none;
     color: black;
-    font-size: 16pt;
+    /*font-size: 16pt;*/
 }
 
-.awsome_input:focus {
+.awsome_input:focus,
+.awsome_input:active {
     background: #F2F2F2;
-}
-
-.awsome_input {
-    margin-bottom: 1em;
+    transform: scale(1.33);
 }
 
 .awesome_chatinput:active,
