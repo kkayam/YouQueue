@@ -15,20 +15,18 @@ function addNext(info, tab) {
         // Get the video id of the video to be queued
         var videoId = info.linkUrl.slice((info.linkUrl.indexOf("?v=") + 3), (info.linkUrl.indexOf("?v=") + 14));
         // Get the video title from google
-        $.ajax({
-            url: "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet",
-            dataType: "jsonp",
-            success: function(data) {
+        var url = "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&fields=items(snippet(title))&part=snippet";
+        fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
                 // Save the video title and video link :D
                 videoqueue.push([data.items[0].snippet.title, info.linkUrl]);
                 chrome.storage.local.set({
                     'queue': videoqueue // Save under the name 'queue'
                 }, function() {});
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert(textStatus);
-            }
-        });
+            });
     });
 }
 
