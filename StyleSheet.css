@@ -5,6 +5,19 @@ body {
     background: white;
 }
 
+/*Empty Header*/
+h2.empty {
+    font-size: 20pt;
+    text-shadow: -3px 3px 0px #FF00DCFF,
+        -6px 6px 0px #01cccc,
+        -9px 9px 0px #00FF39FF;
+    user-select: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+/* Queue (also searchresults)*/
 ul.queue {
     padding: 0;
     margin: 0;
@@ -18,8 +31,8 @@ ul.queue {
     padding: 0;
     margin: 0;
     display: table;
+    border-radius: 6px;
 }
-
 
 .deletebtn,
 .videobtn,
@@ -32,10 +45,6 @@ ul.queue {
     color: #444;
     margin: 0;
     padding: 4px;
-    display: table-cell;
-}
-
-.updownarrow {
     display: table-cell;
 }
 
@@ -73,14 +82,7 @@ ul.queue {
     color: white;
 }
 
-
-
-
-
-
-
-
-
+/* Buttons controlling the queue */
 img.next {
     transform: translateX(-0.15em);
     transition: transform 0.1s;
@@ -91,7 +93,6 @@ img.next:hover {
     transform: translateX(0.15em);
     transition: transform 0.1s;
 }
-
 
 .trash {
     background: #000;
@@ -148,7 +149,6 @@ img.next:hover {
     left: 27px;
 }
 
-
 .trash i {
     position: relative;
     width: 5px;
@@ -184,52 +184,7 @@ img.next:hover {
     transition: transform 250ms;
 }
 
-.chatbutton {
-    cursor: pointer;
-    display: inline-block;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    color: #000;
-    text-align: center;
-    transition: all 0.15s;
-    width: 30px;
-    height: 30px;
-    background: #fff;
-    border-radius: 70px;
-    margin-bottom: 4px;
-}
-
-.chatbutton:focus {
-    outline: 0;
-}
-
-.chatbutton:hover {
-    background: #DDDDDD;
-}
-
-.chatbutton:active {
-    color: #DDDDDD;
-}
-
-img.clickrotate {
-    user-select: none;
-    transition-duration: 0.2s;
-    transition-property: transform;
-}
-
-
-@media all and (max-width:30em) {
-    a.button2 {
-        display: block;
-        margin: 0.4em auto;
-    }
-}
-
+/* Search and Chat inputbars*/
 .input_container {
     display: block;
     text-align: center;
@@ -249,118 +204,65 @@ img.clickrotate {
     transition: all ease-in-out .15s;
 }
 
-
 .awesome_chatinput {
     color: black;
 }
-
 
 .awsome_input {
     margin-bottom: 5px;
 }
 
-.awsome_input_border {
-    display: inline-block;
-    width: 18%;
-    height: 2px;
-    background: #F2F2F2;
-    z-index: -100;
-    position: relative;
-    top: -10px;
-    transition: all ease-in-out .15s;
-}
-
-.awsome_input:active,
-.awsome_input:focus,
-.awesome_chatinput:active,
-.awesome_chatinput:focus {
-    outline: none;
-    color: black;
-    /*font-size: 16pt;*/
-}
-
 .awsome_input:focus,
 .awsome_input:active {
+    outline: none;
+    color: black;
     background: #F2F2F2;
     transform: scale(1.33);
 }
 
 .awesome_chatinput:active,
 .awesome_chatinput:focus {
+    outline: none;
+    color: black;
     font-size: 14pt;
 }
 
-.awsome_input:active+.awsome_input_border,
-.awsome_input:focus+.awsome_input_border {
-    top: 0;
-    width: 100%;
+/* Chatbutton that maximizes and minimizes the chat */
+.chatbutton {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    transition: all 0.15s;
+    width: 30px;
     height: 30px;
+    background: #fff;
+    border-radius: 70px;
+    margin-bottom: 4px;
 }
 
-hr.div {
-    width: 200px;
-    color: red;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    user-select: none;
+.chatbutton:focus {
+    outline: 0;
+    color: #DDDDDD;
 }
 
-a.currenttab {
-    font: 'droid sans';
+.chatbutton:hover {
+    background: #DDDDDD;
 }
 
-.queuerow {
-    border-radius: 6px;
-}
-
-h2.empty {
-    position: relative;
-    top: -6px;
-    font-size: 35px;
-    text-shadow: -3px 3px 0px #FF00DCFF,
-        -6px 6px 0px #01cccc,
-        -9px 9px 0px #00FF39FF;
-    user-select: none;
-}
-
-h2.head {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-size: 25px;
-    -webkit-transition: 0.2s all ease;
-    animation-name: example;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
-    user-select: none;
-}
-
-@keyframes example {
-    0% {
-        color: black;
-        text-shadow: 0 0 0px black;
-    }
-
-    50% {
-        color: rgb(255, 0, 0);
-        text-shadow: 0 0 8px rgb(255, 0, 0);
-    }
-
-    100% {
-        color: black;
-        text-shadow: 0 0 0px black;
-    }
-}
-
-table.queue {
-    border-collapse: collapse;
-    width: 98%;
-}
 
 .chatlink {
     color: #23A6A8FF;
     cursor: pointer;
 }
 
+img.clickrotate {
+    user-select: none;
+    transition-duration: 0.2s;
+    transition-property: transform;
+}
+
+/* Chat extras */
 .chatlinkparent {
     display: inline-block;
     width: 90%;
@@ -373,6 +275,7 @@ table.queue {
     white-space: initial;
 }
 
+/* The music button next to the chat */
 .astext {
     background: none;
     border: 1px;

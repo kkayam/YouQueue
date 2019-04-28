@@ -3,6 +3,8 @@ var tabid;
 // var tabidsindex;
 var tabtitle;
 var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
+var tips = ["You can rearrange your queue by dragging the videos.","Try the tuna sandwich next time you're ordering from subway!","Right click on any Youtube link to add it to your queue!","Gives us a rating on the webstore!", "Admin loves you 😉","Pineapple does not belong on pizza", "You can chat with other users below!", "You change where you want to queue the videos by right clicking any tab.",
+"Instantly queue the first search result by pressing Enter.","Share what you're listening to with the music button in the chat!","The trash button trashes your whole queue!","Press Enter with an empty searchbar to play the next video instantly!"];
 
 // Initialize firestore
 firebase.initializeApp({
@@ -25,6 +27,7 @@ searchBar.focus();
 var searchresults = document.getElementById('searchresults');
 var searchlistarea = document.getElementById("searchlistarea");
 var emptytext = document.getElementById("emptytext");
+var tip = emptytext.getElementsByTagName('tip')[0];
 var currenttab = document.getElementById("currenttab");
 var currenttabdiv = document.getElementById("currenttabdiv");
 var chatbox = document.getElementById("chatbox");
@@ -33,7 +36,7 @@ var username = document.getElementById("username");
 var musicbutton = document.getElementById("musicbutton");
 var chat = document.getElementById("chat");
 var chatbutton = document.getElementById("chatbutton");
-var chatbuttonimg = chatbutton.querySelector("img");
+var chatbuttonimg = chatbutton.getElementsByTagName("img")[0];
 
 sortable('.queue', {
     forcePlaceholderSize: true
@@ -96,6 +99,7 @@ function writeOutQueue() {
         'queue': []
     }, function(result) {
         if (result.queue.length == 0) {
+            tip.innerHTML = tips[Math.floor(Math.random()*tips.length)];
             emptytext.style.display = 'initial';
             queue.style.display = 'none';
             return;
