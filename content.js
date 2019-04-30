@@ -92,15 +92,14 @@ function injectButton(dismissable) {
     var title = dismissable.querySelector("#video-title");
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/plus.png");
-    img.style.width = "80%";
-    img.style.height = "80%";
+    img.style.width = "70%";
+    img.style.height = "70%";
     img.style.verticalAlign = 'middle';
     var button = document.createElement("button");
     button.className = "addbutton";
     button.appendChild(img);
     button.onclick = function() {
-        button.style.background = '#ff5f5f';
-        button.style.borderColor = '#ff5f5f';
+        button.style.background = '#FF9E9E';
         addNext(title.getAttribute("title").trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
     };
     thumbnailoverlay.appendChild(button);

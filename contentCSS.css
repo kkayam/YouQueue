@@ -2,14 +2,13 @@
 .addbutton {
     vertical-align: bottom;
     opacity: 0.7;
-    border-width: 2.5px;
+    border-width: 0;
     width: 25px;
     height: 25px;
     left: 5px;
     bottom: 5px;
     border-radius: 70px;
-    background: red;
-    border-color: #b10101;
+    background: #ff5f5f;
     padding: 0;
     position: absolute;
     z-index: 1;
