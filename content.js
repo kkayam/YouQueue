@@ -20,8 +20,8 @@ function nextMessage() {
 
 // Broadcast tabid to other scripts
 chrome.runtime.sendMessage({
-        type: "tabid"
-    });
+    type: "tabid"
+});
 
 
 // Add next to local queue storage
@@ -37,6 +37,41 @@ function addNext(name, nexturl) {
         }, function() {});
     });
 }
+
+
+function injectSidenav() {
+    var sidenav = document.createElement("div");
+    sidenav.id = "mySidenav";
+    sidenav.className = "sidenav";
+
+    var bar = document.createElement("a");
+    bar.id = "about";
+
+    var img = document.createElement("img");
+    img.src = chrome.extension.getURL("images/nexticon.png");
+    img.style.width = "25px";
+    img.style.height = "25px";
+    img.style.verticalAlign = 'middle';
+
+    bar.appendChild(img);
+
+    // var title = document.createElement("b");
+    // title.innerHTML = "Next";
+    // title.style.verticalAlign = 'middle';
+    // title.style.marginLeft = '10px';
+    // bar.appendChild(title);
+
+    bar.onclick = function() {
+        chrome.runtime.sendMessage({
+            type: "forcenext"
+        });
+    }
+
+    sidenav.appendChild(bar);
+    document.body.appendChild(sidenav);
+}
+
+injectSidenav();
 
 
 // Add button to div called dismissable
