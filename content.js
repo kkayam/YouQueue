@@ -1,6 +1,6 @@
 var cached = [];
 cached.push(location.href);
-
+var sidenav;
 
 // Get the videoplayer
 var vid = document.querySelectorAll(".video-stream");
@@ -10,6 +10,7 @@ if (vid.length > 0) {
         nextMessage()
     }
 }
+
 
 // Tell the background that the video is done
 function nextMessage() {
@@ -40,7 +41,7 @@ function addNext(name, nexturl) {
 
 
 function injectSidenav() {
-    var sidenav = document.createElement("div");
+    sidenav = document.createElement("div");
     sidenav.id = "mySidenav";
     sidenav.className = "sidenav";
 
@@ -72,7 +73,14 @@ function injectSidenav() {
 }
 
 injectSidenav();
-
+// Hide sidenav on fullscreen
+document.addEventListener("fullscreenchange", (event) => {
+    if (document.fullscreenElement) {
+        sidenav.style.display = "none";
+    } else if (!document.fullscreenElement) {
+        sidenav.style.display = "block";
+    }
+});
 
 // Add button to div called dismissable
 function injectButton(dismissable) {
