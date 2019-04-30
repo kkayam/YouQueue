@@ -92,8 +92,8 @@ function injectButton(dismissable) {
     var title = dismissable.querySelector("#video-title");
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/plus.png");
-    img.style.width = "70%";
-    img.style.height = "70%";
+    img.style.width = "60%";
+    img.style.height = "60%";
     img.style.verticalAlign = 'middle';
     var button = document.createElement("button");
     button.className = "addbutton";

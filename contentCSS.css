@@ -1,13 +1,13 @@
 /* Button */
 .addbutton {
     vertical-align: bottom;
-    opacity: 0.7;
+    opacity: 0.6;
     border-width: 0;
     width: 23px;
     height: 23px;
-    left: 5px;
-    bottom: 5px;
-    border-radius: 70px;
+    left: 6px;
+    bottom: 6px;
+    border-radius: 5px;
     background: #ff5f5f;
     padding: 0;
     position: absolute;
