@@ -91,7 +91,7 @@ chrome.runtime.onMessage.addListener(
         } else if (msg.type == "next" && sender.tab.id == tabid) {
             next(tabid);
         } else if (msg.type == "forcenext") {
-            next(tabid);
+            next(sender.tab.id);
         }
     });
 
