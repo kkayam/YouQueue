@@ -26,8 +26,8 @@
 #mySidenav a {
   position: fixed;
   cursor: pointer;
-  right: -3px;
-  top: 230px;
+  bottom: -3px;
+  right: 20px;
   transition: 0.2s;
   z-index: 1;
   padding: 15px;
@@ -36,14 +36,14 @@
   font-size: 20px;
   overflow-x: hidden;
   color: white;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px 5px 0 0;
 }
 
 #mySidenav a:hover {
-  right: 0;
+  bottom: 0;
 }
 
 #about {
-  top: 20px;
+  right: 20px;
   background-color: #ff5f5f;
 }
