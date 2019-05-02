@@ -3,8 +3,20 @@ var tabid;
 // var tabidsindex;
 var tabtitle;
 var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
-var tips = ["You can rearrange your queue by dragging the videos.","Try the tuna sandwich next time you're ordering from subway!","Right click on any Youtube link to add it to your queue!","Gives us a rating on the webstore!", "Admin loves you 😉","Pineapple does not belong on pizza", "You can chat with other users below!", "You change where you want to queue the videos by right clicking any tab.",
-"Instantly queue the first search result by pressing Enter.","Share what you're listening to with the music button in the chat!","The trash button trashes your whole queue!","Press Enter with an empty searchbar to play the next video instantly!"];
+var tips = ["You can rearrange your queue by dragging the videos.",
+"Try the tuna sandwich next time you're ordering from subway!",
+"Right click on any Youtube link to add it to your queue!",
+"Gives us a rating on the webstore!", "Admin loves you 😉",
+"Pineapple does not belong on pizza", "You can chat with other users below!", 
+"You change where you want to queue the videos by right clicking any tab.",
+"Instantly queue the first search result by pressing Enter.",
+"Share what you're listening to with the music button in the chat!",
+"The trash button trashes your whole queue!",
+"Press Enter with an empty searchbar to play the next video instantly!",
+"The youtube queue shortcut is CTRL+Q!",
+"The youtube queue shortcut is CTRL+Q!",
+"The youtube queue shortcut is CTRL+Q!",
+"The youtube queue shortcut is CTRL+Q!"];
 
 // Initialize firestore
 firebase.initializeApp({
