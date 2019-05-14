@@ -25,6 +25,11 @@ firebase.initializeApp({
     projectId: "youtube-queue-237008"
 });
 
+firebase.auth().signInAnonymously().catch(function(error) {
+  var errorCode = error.code;
+  var errorMessage = error.message;
+});
+
 var db = firebase.firestore();
 
 // Reference to messages database
