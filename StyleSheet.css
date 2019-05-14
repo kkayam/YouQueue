@@ -74,7 +74,7 @@ ul.queue {
 }
 
 .searchobj {
-    display: table-row;
+    display: block;
 }
 
 .searchobj:hover {
@@ -200,7 +200,7 @@ img.next:hover {
     border: none;
     background: transparent;
     text-align: center;
-    width: 100%;
+    width: 75%;
     transition: all ease-in-out .15s;
 }
 
