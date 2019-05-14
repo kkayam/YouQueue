@@ -1,4 +1,5 @@
 /* Button */
+.addbuttonprimary,
 .addbutton {
     vertical-align: bottom;
     opacity: 0.6;
@@ -14,10 +15,22 @@
     z-index: 1;
 }
 
+
+.addbuttonprimary {
+    position: initial;
+    align-self: center;
+    width: 28px;
+    height: 28px;
+    left: 0;
+    margin-left: 8px;
+    margin-bottom: 6px;
+}
+
+.addbuttonprimary:focus,
 .addbutton:focus {
     outline: 0;
 }
-
+.addbuttonprimary:hover,
 .addbutton:hover {
     opacity: 1;
 }

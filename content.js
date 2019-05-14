@@ -12,6 +12,30 @@ if (vid.length > 0) {
 }
 
 
+function injectCurrentVideoButton() {
+    var video_primary_info = document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer");
+    var top_level_buttons = video_primary_info.querySelector("div#top-level-buttons");
+
+    var titlediv = document.querySelector("h1.title");
+    var title = titlediv.querySelector("yt-formatted-string.ytd-video-primary-info-renderer").innerHTML;
+
+    var img = document.createElement("img");
+    img.src = chrome.extension.getURL("images/plus.png");
+    img.style.width = "60%";
+    img.style.height = "60%";
+    img.style.verticalAlign = 'middle';
+    var button = document.createElement("button");
+    button.className = "addbuttonprimary";
+    button.appendChild(img);
+    button.onclick = function() {
+        button.style.background = '#FF9E9E';
+        console.log(document.location);
+        addNext(title.trim(), document.location.href);
+    };
+
+    top_level_buttons.appendChild(button);
+}
+
 // Tell the background that the video is done
 function nextMessage() {
     chrome.runtime.sendMessage({
@@ -71,7 +95,6 @@ function injectSidenav() {
     sidenav.appendChild(bar);
     document.body.appendChild(sidenav);
 }
-
 injectSidenav();
 // Hide sidenav on fullscreen
 document.addEventListener("fullscreenchange", (event) => {
@@ -114,3 +137,13 @@ document.querySelectorAll("#dismissable").forEach(function(dismissable) {
 document.arrive("#dismissable", function() {
     injectButton(this);
 });
+
+// try {
+//     injectCurrentVideoButton();
+// } catch(e) {
+//     console.log(e);
+// }
+
+// document.arrive("ytd-menu-renderer.ytd-video-primary-info-renderer", function() {
+//     injectCurrentVideoButton();
+// })

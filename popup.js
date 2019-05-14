@@ -112,7 +112,7 @@ function writeOutQueue() {
     }, function(result) {
         if (result.queue.length == 0) {
             tip.innerHTML = tips[Math.floor(Math.random()*tips.length)];
-            emptytext.style.display = 'initial';
+            emptytext.style.display = 'flex';
             queue.style.display = 'none';
             return;
         }
