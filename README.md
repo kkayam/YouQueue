@@ -7,6 +7,7 @@ Fully coded in javascript, no jquery used. Wont affect performance noticeably.
 ## Installation
 
 Install it on your browser through the Chrome Webstore
+
 https://chrome.google.com/webstore/detail/youtube-queue/haeailcifihaafhoelpckdbkdffnbnnk
 
 ## Usage
