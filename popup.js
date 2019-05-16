@@ -4,19 +4,31 @@ var tabid;
 var tabtitle;
 var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 var tips = ["You can rearrange your queue by dragging the videos.",
-"Try the tuna sandwich next time you're ordering from subway!",
-"Right click on any Youtube link to add it to your queue!",
-"Gives us a rating on the webstore!", "Admin loves you 😉",
-"Pineapple does not belong on pizza", "You can chat with other users below!", 
-"You change where you want to queue the videos by right clicking any tab.",
-"Instantly queue the first search result by pressing Enter.",
-"Share what you're listening to with the music button in the chat!",
-"The trash button trashes your whole queue!",
-"Press Enter with an empty searchbar to play the next video instantly!",
-"The youtube queue shortcut is CTRL+Q!",
-"The youtube queue shortcut is CTRL+Q!",
-"The youtube queue shortcut is CTRL+Q!",
-"The youtube queue shortcut is CTRL+Q!"];
+    "Try the tuna sandwich next time you're ordering from subway!",
+    "Right click on any Youtube link to add it to your queue!",
+    "Gives us a rating on the webstore!", "Admin loves you 😉",
+    "Pineapple does not belong on pizza", "You can chat with other users below!",
+    "Instantly queue the first search result by pressing Enter.",
+    "Share what you're listening to with the music button in the chat!",
+    "The trash button trashes your whole queue!",
+    "Press Enter with an empty searchbar to play the next video instantly!",
+    "The youtube queue shortcut is CTRL+Q!",
+    "The youtube queue shortcut is CTRL+Q!",
+    "The youtube queue shortcut is CTRL+Q!",
+    "The youtube queue shortcut is CTRL+Q!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!",
+    "Click the Q in the bottom menu to queue videos to that tab!"
+];
 
 // Initialize firestore
 firebase.initializeApp({
@@ -26,8 +38,8 @@ firebase.initializeApp({
 });
 
 firebase.auth().signInAnonymously().catch(function(error) {
-  var errorCode = error.code;
-  var errorMessage = error.message;
+    var errorCode = error.code;
+    var errorMessage = error.message;
 });
 
 var db = firebase.firestore();
@@ -63,7 +75,7 @@ sortable('.queue', {
     }, function(result) {
         var videoqueue = result.queue;
         var item = videoqueue.splice(e.detail.origin.index, 1);
-        videoqueue.splice(e.detail.destination.index,0,item[0]);
+        videoqueue.splice(e.detail.destination.index, 0, item[0]);
         chrome.storage.local.set({
             'queue': videoqueue
         }, function() {});
@@ -116,7 +128,7 @@ function writeOutQueue() {
         'queue': []
     }, function(result) {
         if (result.queue.length == 0) {
-            tip.innerHTML = tips[Math.floor(Math.random()*tips.length)];
+            tip.innerHTML = tips[Math.floor(Math.random() * tips.length)];
             emptytext.style.display = 'flex';
             queue.style.display = 'none';
             return;
@@ -179,13 +191,15 @@ function nextto(index) {
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
-        videoqueue = result.queue;
-        var vidurl = videoqueue[index][1];
-        videoqueue.splice(index, 1);
-        chrome.storage.local.set({
-            'queue': videoqueue
-        }, function() {});
-        openLink(vidurl);
+        if (result.queue.length > index) {
+            videoqueue = result.queue;
+            var vidurl = videoqueue[index][1];
+            videoqueue.splice(index, 1);
+            chrome.storage.local.set({
+                'queue': videoqueue
+            }, function() {});
+            openLink(vidurl);
+        }
     });
 }
 

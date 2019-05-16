@@ -11,7 +11,6 @@ if (vid.length > 0) {
     }
 }
 
-
 function injectCurrentVideoButton() {
     var video_primary_info = document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer");
     var top_level_buttons = video_primary_info.querySelector("div#top-level-buttons");
@@ -48,6 +47,15 @@ chrome.runtime.sendMessage({
     type: "tabid"
 });
 
+chrome.runtime.onMessage.addListener(
+    function(msg, sender, sendResponse) {
+        if (msg.type == "notselected") {
+            document.querySelector("a#here").style.color = "black";
+        } else if (msg.type == "selected") {
+            document.querySelector("a#here").style.color = "white";
+    }});
+
+
 
 // Add next to local queue storage
 function addNext(name, nexturl) {
@@ -63,14 +71,13 @@ function addNext(name, nexturl) {
     });
 }
 
-
 function injectSidenav() {
     sidenav = document.createElement("div");
     sidenav.id = "mySidenav";
     sidenav.className = "sidenav";
 
-    var bar = document.createElement("a");
-    bar.id = "about";
+    var nextbar = document.createElement("a");
+    nextbar.id = "next";
 
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/nexticon.png");
@@ -78,24 +85,36 @@ function injectSidenav() {
     img.style.height = "25px";
     img.style.verticalAlign = 'middle';
 
-    bar.appendChild(img);
+    nextbar.appendChild(img);
 
-    // var title = document.createElement("b");
-    // title.innerHTML = "Next";
-    // title.style.verticalAlign = 'middle';
-    // title.style.marginLeft = '10px';
-    // bar.appendChild(title);
+    var herebar = document.createElement("a");
+    herebar.id = "here";
+    herebar.innerHTML = "Q";
+    chrome.runtime.sendMessage({
+        type: "check"
+    }, function(response) {
+        if (response.response=="selected") {
+            herebar.style.color = 'white';
+        }
+    });
 
-    bar.onclick = function() {
+    nextbar.onclick = function() {
         chrome.runtime.sendMessage({
             type: "forcenext"
         });
     }
+    herebar.onclick = function() {
+        chrome.runtime.sendMessage({
+            type: "playnexthere"
+        });
+    }
 
-    sidenav.appendChild(bar);
+    sidenav.appendChild(nextbar);
+    sidenav.appendChild(herebar);
     document.body.appendChild(sidenav);
 }
 injectSidenav();
+
 // Hide sidenav on fullscreen
 document.addEventListener("fullscreenchange", (event) => {
     if (document.fullscreenElement) {
