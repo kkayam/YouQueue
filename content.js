@@ -27,9 +27,9 @@ function showSnackbar() {
     var x = document.getElementById("snackbar");
 
     if (document.location.href.match(/watch/)) {
-        x.innerHTML = "Your videos are queued after this video";
+        x.innerHTML = "Your videos are now queued after this video";
     } else {
-        x.innerHTML = "Your videos will play after any video in this tab";
+        x.innerHTML = "Your videos are now queued to this tab";
     }
     // Add the "show" class to DIV
     x.className = "show";
