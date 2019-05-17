@@ -3,21 +3,24 @@ cached.push(location.href);
 var sidenav;
 
 // Get the videoplayer
-var vid = document.querySelectorAll(".video-stream");
-if (vid.length > 0) {
-    // Play next when video ends
-    vid[0].onended = function(e) {
-        nextMessage()
+function attachToVid() {
+    var vid = document.querySelectorAll(".video-stream");
+    if (vid.length > 0) {
+        // Play next when video ends
+        vid[0].onended = function(e) {
+            nextMessage()
+        }
     }
 }
 
 // Snackbar to notify about "playnexthere"
+var snackbar;
+
 function injectSnackbar() {
     var snackbar = document.createElement("div");
     snackbar.setAttribute("id", "snackbar");
     document.body.append(snackbar);
 }
-injectSnackbar();
 
 function showSnackbar() {
     // Get the snackbar DIV
@@ -26,7 +29,7 @@ function showSnackbar() {
     if (document.location.href.match(/watch/)) {
         x.innerHTML = "Your videos are queued after this video";
     } else {
-        x.innerHTML = "Your videos are queued to this tab";
+        x.innerHTML = "Your videos will play after any video in this tab";
     }
     // Add the "show" class to DIV
     x.className = "show";
@@ -34,6 +37,7 @@ function showSnackbar() {
     // After 3 seconds, remove the show class from DIV
     setTimeout(function() { x.className = ""; }, 3000);
 }
+injectSnackbar();
 
 function injectCurrentVideoButton() {
     var video_primary_info = document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer");
@@ -71,6 +75,7 @@ chrome.runtime.sendMessage({
     type: "tabid"
 });
 
+// Listen to directions from the background script
 chrome.runtime.onMessage.addListener(
     function(msg, sender, sendResponse) {
         if (msg.type == "notselected") {
@@ -96,7 +101,8 @@ function addNext(name, nexturl) {
     });
 }
 
-function injectSidenav() {
+// Injects the controls in the bottom
+function injectBottomMenu() {
     sidenav = document.createElement("div");
     sidenav.id = "mySidenav";
     sidenav.className = "sidenav";
@@ -133,15 +139,16 @@ function injectSidenav() {
             type: "playnexthere"
         });
         showSnackbar();
+        attachToVid();
     }
 
     sidenav.appendChild(nextbar);
     sidenav.appendChild(herebar);
     document.body.appendChild(sidenav);
 }
-injectSidenav();
+injectBottomMenu();
 
-// Hide sidenav on fullscreen
+// Hide Bottom menu on fullscreen
 document.addEventListener("fullscreenchange", (event) => {
     if (document.fullscreenElement) {
         sidenav.style.display = "none";
@@ -174,6 +181,7 @@ function injectButton(dismissable) {
     return 1;
 }
 
+// Select all current dismissables
 document.querySelectorAll("#dismissable").forEach(function(dismissable) {
     injectButton(dismissable);
 });
