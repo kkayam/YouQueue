@@ -11,6 +11,30 @@ if (vid.length > 0) {
     }
 }
 
+// Snackbar to notify about "playnexthere"
+function injectSnackbar() {
+    var snackbar = document.createElement("div");
+    snackbar.setAttribute("id", "snackbar");
+    document.body.append(snackbar);
+}
+injectSnackbar();
+
+function showSnackbar() {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+
+    if (document.location.href.match(/watch/)) {
+        x.innerHTML = "Your videos are queued after this video";
+    } else {
+        x.innerHTML = "Your videos are queued to this tab";
+    }
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function() { x.className = ""; }, 3000);
+}
+
 function injectCurrentVideoButton() {
     var video_primary_info = document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer");
     var top_level_buttons = video_primary_info.querySelector("div#top-level-buttons");
@@ -53,7 +77,8 @@ chrome.runtime.onMessage.addListener(
             document.querySelector("a#here").style.color = "black";
         } else if (msg.type == "selected") {
             document.querySelector("a#here").style.color = "white";
-    }});
+        }
+    });
 
 
 
@@ -93,7 +118,7 @@ function injectSidenav() {
     chrome.runtime.sendMessage({
         type: "check"
     }, function(response) {
-        if (response.response=="selected") {
+        if (response.response == "selected") {
             herebar.style.color = 'white';
         }
     });
@@ -107,6 +132,7 @@ function injectSidenav() {
         chrome.runtime.sendMessage({
             type: "playnexthere"
         });
+        showSnackbar();
     }
 
     sidenav.appendChild(nextbar);
