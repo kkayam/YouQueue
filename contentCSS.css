@@ -36,7 +36,7 @@
 }
 
 /* Side nav */
-#mySidenav a {
+#bottomMenu a {
   position: fixed;
   cursor: pointer;
   bottom: -3px;
@@ -53,7 +53,7 @@
   user-select: none;
 }
 
-#mySidenav a:hover {
+#bottomMenu a:hover {
   bottom: 0;
 }
 

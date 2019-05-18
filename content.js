@@ -1,6 +1,6 @@
 var cached = [];
 cached.push(location.href);
-var sidenav;
+var bottomMenu;
 
 // Get the videoplayer
 function attachToVid() {
@@ -12,16 +12,14 @@ function attachToVid() {
         }
     }
 }
+attachToVid();
 
 // Snackbar to notify about "playnexthere"
-var snackbar;
-
 function injectSnackbar() {
     var snackbar = document.createElement("div");
     snackbar.setAttribute("id", "snackbar");
     document.body.append(snackbar);
 }
-
 function showSnackbar() {
     // Get the snackbar DIV
     var x = document.getElementById("snackbar");
@@ -48,7 +46,7 @@ function showSnackbar() {
 }
 injectSnackbar();
 
-function injectCurrentVideoButton() {
+function injectPrimaryAddButton() {
     var video_primary_info = document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer");
     var top_level_buttons = video_primary_info.querySelector("div#top-level-buttons");
 
@@ -79,23 +77,6 @@ function nextMessage() {
     });
 }
 
-// Broadcast tabid to other scripts
-chrome.runtime.sendMessage({
-    type: "tabid"
-});
-
-// Listen to directions from the background script
-chrome.runtime.onMessage.addListener(
-    function(msg, sender, sendResponse) {
-        if (msg.type == "notselected") {
-            document.querySelector("a#here").style.color = "black";
-        } else if (msg.type == "selected") {
-            document.querySelector("a#here").style.color = "white";
-        }
-    });
-
-
-
 // Add next to local queue storage
 function addNext(name, nexturl) {
     var videoqueue;
@@ -112,9 +93,8 @@ function addNext(name, nexturl) {
 
 // Injects the controls in the bottom
 function injectBottomMenu() {
-    sidenav = document.createElement("div");
-    sidenav.id = "mySidenav";
-    sidenav.className = "sidenav";
+    bottomMenu = document.createElement("div");
+    bottomMenu.id = "bottomMenu";
 
     var nextbar = document.createElement("a");
     nextbar.id = "next";
@@ -124,12 +104,12 @@ function injectBottomMenu() {
     img.style.width = "25px";
     img.style.height = "25px";
     img.style.verticalAlign = 'middle';
-
     nextbar.appendChild(img);
 
     var herebar = document.createElement("a");
     herebar.id = "here";
     herebar.innerHTML = "Q";
+    // Ask background if this tab is selected
     chrome.runtime.sendMessage({
         type: "check"
     }, function(response) {
@@ -151,23 +131,14 @@ function injectBottomMenu() {
         attachToVid();
     }
 
-    sidenav.appendChild(nextbar);
-    sidenav.appendChild(herebar);
-    document.body.appendChild(sidenav);
+    bottomMenu.appendChild(nextbar);
+    bottomMenu.appendChild(herebar);
+    document.body.appendChild(bottomMenu);
 }
 injectBottomMenu();
 
-// Hide Bottom menu on fullscreen
-document.addEventListener("fullscreenchange", (event) => {
-    if (document.fullscreenElement) {
-        sidenav.style.display = "none";
-    } else if (!document.fullscreenElement) {
-        sidenav.style.display = "block";
-    }
-});
-
 // Add button to div called dismissable
-function injectButton(dismissable) {
+function injectAddButton(dismissable) {
     var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
     if (thumbnailoverlay == null || thumbnailoverlay.querySelector(".addbutton") != null) {
         return 0;
@@ -192,20 +163,34 @@ function injectButton(dismissable) {
 
 // Select all current dismissables
 document.querySelectorAll("#dismissable").forEach(function(dismissable) {
-    injectButton(dismissable);
+    injectAddButton(dismissable);
 });
 
 // When the "dismissable" div arrives, inject button
 document.arrive("#dismissable", function() {
-    injectButton(this);
+    injectAddButton(this);
 });
 
-// try {
-//     injectCurrentVideoButton();
-// } catch(e) {
-//     console.log(e);
-// }
+// Hide Bottom menu on fullscreen
+document.addEventListener("fullscreenchange", (event) => {
+    if (document.fullscreenElement) {
+        bottomMenu.style.display = "none";
+    } else if (!document.fullscreenElement) {
+        bottomMenu.style.display = "block";
+    }
+});
 
-// document.arrive("ytd-menu-renderer.ytd-video-primary-info-renderer", function() {
-//     injectCurrentVideoButton();
-// })
+// Broadcast tabid to other scripts
+chrome.runtime.sendMessage({
+    type: "tabid"
+});
+
+// Listen to directions from the background script
+chrome.runtime.onMessage.addListener(
+    function(msg, sender, sendResponse) {
+        if (msg.type == "notselected") {
+            document.querySelector("a#here").style.color = "black";
+        } else if (msg.type == "selected") {
+            document.querySelector("a#here").style.color = "white";
+        }
+    });
