@@ -31,6 +31,15 @@ function showSnackbar() {
     } else {
         x.innerHTML = "Your videos are now queued to this tab";
     }
+
+    chrome.runtime.sendMessage({
+        type: "check"
+    }, function(response) {
+        if (response.response == "selected") {
+            x.innerHTML = "Your videos are already queued to this tab";
+        }
+    });
+
     // Add the "show" class to DIV
     x.className = "show";
 
@@ -135,10 +144,10 @@ function injectBottomMenu() {
         });
     }
     herebar.onclick = function() {
+        showSnackbar();
         chrome.runtime.sendMessage({
             type: "playnexthere"
         });
-        showSnackbar();
         attachToVid();
     }
 

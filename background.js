@@ -100,6 +100,10 @@ chrome.runtime.onMessage.addListener(
                 sendresponse({
                     response: "selected"
                 });
+            } else {
+                sendresponse({
+                    response: "notselected"
+                });
             }
         }
     });
