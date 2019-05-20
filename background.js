@@ -72,7 +72,6 @@ chrome.tabs.onRemoved.addListener(function(closedtabid, removed) {
 // Update current tabid if the selected tab leaves youtube
 chrome.tabs.onUpdated.addListener(function(updatedTabid, changeInfo, tab) {
     if (updatedTabid == tabid && changeInfo.url) {
-        console.log("update");
         if (!changeInfo.url.match(/youtube\.com/)) {
             chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
                 tabid = "none";

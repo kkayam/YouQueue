@@ -3,7 +3,7 @@
 
     "name": "YOUTUBE QUEUE",
     "description": "Queue youtube videos and keep the performance",
-    "version": "5.76",
+    "version": "5.77",
     "permissions": [
         "https://www.youtube.com/*",
         "contextMenus",
