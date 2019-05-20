@@ -1,6 +1,4 @@
 var tabid;
-// var tabids;
-// var tabidsindex;
 var tabtitle;
 var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 var tips = ["You can rearrange your queue by dragging the videos.",
@@ -354,3 +352,10 @@ chrome.tabs.onUpdated.addListener(
         }
     }
 );
+
+currenttabdiv.onclick = function() {
+    chrome.tabs.update(tabid, { 'active': true }, function() {});
+    chrome.tabs.get(tabid, function(tab) {
+        chrome.windows.update(tab.windowId, {'focused':true});
+    });
+}

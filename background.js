@@ -3,7 +3,6 @@ var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 // Start by setting the queuetab to none and storing it
 saveTabInfo();
 
-
 // Add the video in 'info' to the queue
 function addNext(info, tab) {
     var videoqueue;
@@ -42,7 +41,6 @@ function saveTabInfo() {
     }, function() {});
 }
 
-
 // CONTEXT MENUS
 chrome.contextMenus.create({
     id: "playnext",
@@ -51,21 +49,10 @@ chrome.contextMenus.create({
     targetUrlPatterns: ["https://www.youtube.com/watch*"]
 });
 
-chrome.contextMenus.create({
-    id: "playnexthere",
-    title: "Play next here",
-    contexts: ["page"],
-    documentUrlPatterns: ["https://www.youtube.com/*"]
-});
-
 // LISTENERS
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "playnext") {
         addNext(info, tab);
-    }
-    if (info.menuItemId === "playnexthere") {
-        tabid = tab.id;
-        saveTabInfo();
     }
 });
 
@@ -79,6 +66,22 @@ chrome.tabs.onRemoved.addListener(function(closedtabid, removed) {
             }
             saveTabInfo();
         });
+    }
+});
+
+// Update current tabid if the selected tab leaves youtube
+chrome.tabs.onUpdated.addListener(function(updatedTabid, changeInfo, tab) {
+    if (updatedTabid == tabid && changeInfo.url) {
+        console.log("update");
+        if (!changeInfo.url.match(/youtube\.com/g)) {
+            chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
+                tabid = "none";
+                if (tabs.length > 0) {
+                    tabid = tabs[0].id;
+                }
+                saveTabInfo();
+            });
+        }
     }
 });
 
@@ -115,7 +118,7 @@ function next(tabtoupdate) {
     chrome.storage.local.get({
         'queue': []
     }, function(result) {
-        if (result.queue.length>0) {
+        if (result.queue.length > 0) {
             videoqueue = result.queue;
             // Get first video
             var vidurl = videoqueue[0][1];
@@ -136,7 +139,9 @@ function next(tabtoupdate) {
 chrome.storage.onChanged.addListener(function(changes, areaName) {
     if (changes.tab) {
         tabid = changes.tab.newValue;
-        chrome.tabs.sendMessage(tabid, { type: "selected" });
+        if (tabid != "none") {
+            chrome.tabs.sendMessage(tabid, { type: "selected" });
+        }
         chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
             tabs.forEach(function(tab) {
                 if (tab.id != tabid) {

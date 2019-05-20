@@ -11,9 +11,7 @@
     <!-- This is the now playing text -->
     <div align="center" style="min-height: 25px;">
         <div align="center" id="currenttabdiv" style="display: none; padding-top: 10px;width: 280px;">
-            <b style="user-select: none;">📼Now Playing🎵</b>
-            <br>
-            <a id="currenttab" align="center">Nothing</a>
+            <b id="currenttab" align="center" class="nowplaying">Nothing</b>
         </div>
     </div>
     <br>
@@ -56,13 +54,14 @@
     </div>
     <div id="chat" style="display: none;">
         <div id="chatbox" align="center" style="width: 100%; background: #F2F2F2;"></div>
+        <!-- Chat input -->
         <table align="center">
             <tr align="center" style="height: 3em;">
                 <td width="70" style="vertical-align: middle;">
                     <input id="username" type="text" class="awesome_chatinput" placeholder="username" />
                 </td>
                 <td style="vertical-align: middle;">
-                    <input id="chatinput" type="text" class="awesome_chatinput" placeholder="Chat" style="text-align: left;" />
+                    <input id="chatinput" type="text" class="awesome_chatinput" placeholder="Chat" style="text-align: left;width: 100%;" />
                 </td>
                 <td width="25" style="vertical-align: middle;">
                     <button id="musicbutton" class="astext">🎵</button>
