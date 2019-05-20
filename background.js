@@ -73,7 +73,7 @@ chrome.tabs.onRemoved.addListener(function(closedtabid, removed) {
 chrome.tabs.onUpdated.addListener(function(updatedTabid, changeInfo, tab) {
     if (updatedTabid == tabid && changeInfo.url) {
         console.log("update");
-        if (!changeInfo.url.match(/youtube\.com/g)) {
+        if (!changeInfo.url.match(/youtube\.com/)) {
             chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
                 tabid = "none";
                 if (tabs.length > 0) {
