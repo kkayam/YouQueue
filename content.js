@@ -185,6 +185,10 @@ chrome.runtime.sendMessage({
     type: "tabid"
 });
 
+window.addEventListener("yt-page-data-updated", function() {
+    injectPrimaryAddButton();
+});
+
 // Listen to directions from the background script
 chrome.runtime.onMessage.addListener(
     function(msg, sender, sendResponse) {
