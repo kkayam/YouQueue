@@ -63,7 +63,6 @@ function injectPrimaryAddButton() {
     button.appendChild(img);
     button.onclick = function() {
         button.style.background = '#FF9E9E';
-        console.log(document.location);
         addNext(title.trim(), document.location.href);
     };
 
