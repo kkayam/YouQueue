@@ -4,11 +4,11 @@ var bottomMenu;
 
 // Get the videoplayer
 function attachToVid() {
-    var vid = document.querySelectorAll(".video-stream");
-    if (vid.length > 0) {
+    var vid = document.querySelector("video");
+    if (vid) {
         // Play next when video ends
-        vid[0].onended = function(e) {
-            nextMessage()
+        vid.onended = function(e) {
+            nextMessage();
         }
     }
 }
@@ -20,23 +20,11 @@ function injectSnackbar() {
     snackbar.setAttribute("id", "snackbar");
     document.body.append(snackbar);
 }
-function showSnackbar() {
+
+function showSnackbar(message) {
     // Get the snackbar DIV
     var x = document.getElementById("snackbar");
-
-    if (document.location.href.match(/watch/)) {
-        x.innerHTML = "Your videos are now queued after this video";
-    } else {
-        x.innerHTML = "Your videos are now queued to this tab";
-    }
-
-    chrome.runtime.sendMessage({
-        type: "check"
-    }, function(response) {
-        if (response.response == "selected") {
-            x.innerHTML = "Your videos are already queued to this tab";
-        }
-    });
+    x.innerHTML = message;
 
     // Add the "show" class to DIV
     x.className = "show";
@@ -45,6 +33,25 @@ function showSnackbar() {
     setTimeout(function() { x.className = ""; }, 3000);
 }
 injectSnackbar();
+
+function herebarSnackbarMessage() {
+    var message = "";
+    // sendmessage is async
+    chrome.runtime.sendMessage({
+        type: "check"
+    }, function(response) {
+        // Decide which screen the user is in and the context
+        if (response.response == "selected") {
+            message = "Your videos are already queued to this tab";
+        } else if (document.location.href.match(/watch/)) {
+            message = "Your videos are now queued after this video";
+        } else {
+            message = "Your videos are now queued to this tab";
+        }
+        // Show snackbar with appropriate message
+        showSnackbar(message);
+    });
+}
 
 function injectPrimaryAddButton() {
     var video_primary_info = document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer");
@@ -55,9 +62,7 @@ function injectPrimaryAddButton() {
 
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/plus.png");
-    img.style.width = "60%";
-    img.style.height = "60%";
-    img.style.verticalAlign = 'middle';
+
     var button = document.createElement("button");
     button.className = "addbuttonprimary";
     button.appendChild(img);
@@ -123,7 +128,7 @@ function injectBottomMenu() {
         });
     }
     herebar.onclick = function() {
-        showSnackbar();
+        herebarSnackbarMessage();
         chrome.runtime.sendMessage({
             type: "playnexthere"
         });
@@ -140,24 +145,23 @@ injectBottomMenu();
 function injectAddButton(dismissable) {
     var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
     if (thumbnailoverlay == null || thumbnailoverlay.querySelector(".addbutton") != null) {
-        return 0;
+        return;
     }
     var thumbnail = dismissable.querySelector("#thumbnail");
     var title = dismissable.querySelector("#video-title");
+
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/plus.png");
-    img.style.width = "60%";
-    img.style.height = "60%";
-    img.style.verticalAlign = 'middle';
+
     var button = document.createElement("button");
     button.className = "addbutton";
     button.appendChild(img);
+
     button.onclick = function() {
         button.style.background = '#FF9E9E';
         addNext(title.getAttribute("title").trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
     };
     thumbnailoverlay.appendChild(button);
-    return 1;
 }
 
 // Select all current dismissables
@@ -184,8 +188,14 @@ chrome.runtime.sendMessage({
     type: "tabid"
 });
 
+// Button which adds the current video to the queue
 window.addEventListener("yt-page-data-updated", function() {
     injectPrimaryAddButton();
+});
+
+// Attaches to video when user navigates, uses this listener since the content script wont be refreshed each time you click on a new video
+window.addEventListener("yt-navigate-finish", function() {
+    attachToVid();
 });
 
 // Listen to directions from the background script

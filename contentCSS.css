@@ -15,7 +15,6 @@
     z-index: 1;
 }
 
-
 .addbuttonprimary {
     position: initial;
     align-self: center;
@@ -33,6 +32,13 @@
 .addbuttonprimary:hover,
 .addbutton:hover {
     opacity: 1;
+}
+
+.addbuttonprimary img,
+.addbutton img {
+  width: 60%;
+  height: 60%;
+  vertical-align: middle;
 }
 
 /* Side nav */
