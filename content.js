@@ -105,9 +105,6 @@ function injectBottomMenu() {
 
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/nexticon.png");
-    img.style.width = "25px";
-    img.style.height = "25px";
-    img.style.verticalAlign = 'middle';
     nextbar.appendChild(img);
 
     var herebar = document.createElement("a");
@@ -122,22 +119,19 @@ function injectBottomMenu() {
         }
     });
 
-    var popout = document.createElement("a");
-    popout.id = "popout";
+    var pip = document.createElement("a");
+    pip.id = "pip";
 
     var img = document.createElement("img");
-    img.src = chrome.extension.getURL("images/popout.png");
-    img.style.width = "25px";
-    img.style.height = "25px";
-    img.style.verticalAlign = 'top';
-    popout.appendChild(img);
+    img.src = chrome.extension.getURL("images/pip.png");
+    pip.appendChild(img);
 
     nextbar.onclick = function() {
         chrome.runtime.sendMessage({
             type: "forcenext"
         });
     }
-    popout.onclick = function() {
+    pip.onclick = function() {
         var vid = document.querySelector("video");
         if (vid) {
             if (vid !== document.pictureInPictureElement) {
@@ -157,7 +151,7 @@ function injectBottomMenu() {
 
     bottomMenu.appendChild(nextbar);
     bottomMenu.appendChild(herebar);
-    bottomMenu.appendChild(popout);
+    bottomMenu.appendChild(pip);
     document.body.appendChild(bottomMenu);
 }
 injectBottomMenu();

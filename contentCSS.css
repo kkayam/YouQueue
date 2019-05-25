@@ -41,7 +41,7 @@
   vertical-align: middle;
 }
 
-/* Side nav */
+/* Bottom menu */
 #bottomMenu a {
   position: fixed;
   cursor: pointer;
@@ -63,11 +63,17 @@
   bottom: 0;
 }
 
+#bottomMenu a img {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
 #next {
   right: 20px;
   background-color: #ff5f5f;
 }
-#popout {
+#pip {
   right: 140px;
   background-color: pink;
 }
