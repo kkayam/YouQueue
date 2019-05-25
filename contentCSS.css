@@ -67,6 +67,10 @@
   right: 20px;
   background-color: #ff5f5f;
 }
+#popout {
+  right: 140px;
+  background-color: pink;
+}
 
 #here {
   right: 80px;

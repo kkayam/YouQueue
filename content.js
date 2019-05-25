@@ -122,10 +122,30 @@ function injectBottomMenu() {
         }
     });
 
+    var popout = document.createElement("a");
+    popout.id = "popout";
+
+    var img = document.createElement("img");
+    img.src = chrome.extension.getURL("images/popout.png");
+    img.style.width = "25px";
+    img.style.height = "25px";
+    img.style.verticalAlign = 'top';
+    popout.appendChild(img);
+
     nextbar.onclick = function() {
         chrome.runtime.sendMessage({
             type: "forcenext"
         });
+    }
+    popout.onclick = function() {
+        var vid = document.querySelector("video");
+        if (vid) {
+            if (vid !== document.pictureInPictureElement) {
+                vid.requestPictureInPicture();
+            } else {
+                document.exitPictureInPicture();
+            }
+        }
     }
     herebar.onclick = function() {
         herebarSnackbarMessage();
@@ -137,6 +157,7 @@ function injectBottomMenu() {
 
     bottomMenu.appendChild(nextbar);
     bottomMenu.appendChild(herebar);
+    bottomMenu.appendChild(popout);
     document.body.appendChild(bottomMenu);
 }
 injectBottomMenu();
