@@ -14,11 +14,10 @@ function getTabid() {
 }
 
 function openLink(url) {
-    if (tabid == "none") {
-        chrome.tabs.create({
-            url: url
-        }, function(tab) {
-            tabid = tab.id;
+    if (!tabid || tabid == "paused") {
+        chrome.runtime.sendMessage({
+            type: "openurl",
+            newurl: url
         });
     } else {
         chrome.tabs.update(tabid, {
@@ -44,7 +43,7 @@ function makeRequest(q) {
     request.execute(function(response) {
         var srchItems = response.result.items;
         searchresults.innerHTML = "";
-        srchItems.forEach( function(item, index) {
+        srchItems.forEach(function(item, index) {
             var vidTitle = item.snippet.title;
             var vidUrl = "https://www.youtube.com/watch?v=" + item.id.videoId;
             var row = document.createElement("p");
@@ -69,7 +68,7 @@ function getFirst() {
     request.execute(function(response) {
         var srchItems = response.result.items;
         searchresults.innerHTML = "";
-        srchItems.forEach( function(item, index) {
+        srchItems.forEach(function(item, index) {
             vidTitle = item.snippet.title;
             vidUrl = "https://www.youtube.com/watch?v=" + item.id.videoId;
             addNext(vidTitle, vidUrl);

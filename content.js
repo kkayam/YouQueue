@@ -1,6 +1,7 @@
 var cached = [];
 cached.push(location.href);
 var bottomMenu;
+var snackbar_timeout;
 
 // Get the videoplayer
 function attachToVid() {
@@ -22,6 +23,9 @@ function injectSnackbar() {
 }
 
 function showSnackbar(message) {
+    if (snackbar_timeout) {
+        clearTimeout(snackbar_timeout);
+    }
     // Get the snackbar DIV
     var x = document.getElementById("snackbar");
     x.innerHTML = message;
@@ -30,7 +34,7 @@ function showSnackbar(message) {
     x.className = "show";
 
     // After 3 seconds, remove the show class from DIV
-    setTimeout(function() { x.className = ""; }, 3000);
+    snackbar_timeout = setTimeout(function() { x.className = ""; snackbar_timeout = null;}, 3000);
 }
 injectSnackbar();
 
@@ -42,11 +46,11 @@ function herebarSnackbarMessage() {
     }, function(response) {
         // Decide which screen the user is in and the context
         if (response.response == "selected") {
-            message = "Your videos are already queued to this tab";
+            message = "Queue paused";
         } else if (document.location.href.match(/watch/)) {
-            message = "Your videos are now queued after this video";
+            message = "Queued after this video";
         } else {
-            message = "Your videos are now queued to this tab";
+            message = "Queued to this tab";
         }
         // Show snackbar with appropriate message
         showSnackbar(message);
@@ -200,7 +204,7 @@ document.addEventListener("fullscreenchange", (event) => {
 
 // Broadcast tabid to other scripts
 chrome.runtime.sendMessage({
-    type: "tabid"
+    type: "newtab"
 });
 
 // Button which adds the current video to the queue

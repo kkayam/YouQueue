@@ -1,7 +1,7 @@
-var tabid = "none";
+var tabid;
 var apiKey = "AIzaSyDFU2ViycjJgbrpgxYQF5aVrnL7l9vQ9Mw";
 // Start by setting the queuetab to none and storing it
-saveTabInfo();
+saveTabInfo(null);
 
 // Add the video in 'info' to the queue
 function addNext(info, tab) {
@@ -29,15 +29,11 @@ function addNext(info, tab) {
     });
 }
 
-// for notifications in the future
-// chrome.browserAction.setBadgeBackgroundColor({
-//     color: "#ffdd00ff"
-// });
 
 // Save the tabid to the local storage
-function saveTabInfo() {
+function saveTabInfo(newtabid) {
     chrome.storage.local.set({
-        'tab': tabid
+        'tab': newtabid
     }, function() {});
 }
 
@@ -60,11 +56,11 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 chrome.tabs.onRemoved.addListener(function(closedtabid, removed) {
     if (closedtabid == tabid) {
         chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
-            tabid = "none";
             if (tabs.length > 0) {
-                tabid = tabs[0].id;
+                saveTabInfo(tabs[0].id);
+            } else {
+                saveTabInfo(null);
             }
-            saveTabInfo();
         });
     }
 });
@@ -74,11 +70,11 @@ chrome.tabs.onUpdated.addListener(function(updatedTabid, changeInfo, tab) {
     if (updatedTabid == tabid && changeInfo.url) {
         if (!changeInfo.url.match(/youtube\.com/)) {
             chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
-                tabid = "none";
                 if (tabs.length > 0) {
-                    tabid = tabs[0].id;
+                    saveTabInfo(tabs[0].id);
+                } else {
+                    saveTabInfo(null);
                 }
-                saveTabInfo();
             });
         }
     }
@@ -87,17 +83,19 @@ chrome.tabs.onUpdated.addListener(function(updatedTabid, changeInfo, tab) {
 // if the background script receives a message (probably from the content script)
 chrome.runtime.onMessage.addListener(
     function(msg, sender, sendresponse) {
-        if (msg.type == "tabid" && tabid == "none") {
-            tabid = sender.tab.id;
-            saveTabInfo();
-        } else if (msg.type == "next" && sender.tab.id == tabid) {
+        if (msg.type == "newtab" && !tabid && tabid != "paused") { // New tab opened
+            saveTabInfo(sender.tab.id);
+        } else if (msg.type == "next" && sender.tab.id == tabid) { // Video ended in a tab
             next(tabid);
-        } else if (msg.type == "forcenext") {
+        } else if (msg.type == "forcenext") { // User clicked play next in one of the tabs
             next(sender.tab.id);
-        } else if (msg.type == "playnexthere") {
-            tabid = sender.tab.id;
-            saveTabInfo();
-        } else if (msg.type == "check") {
+        } else if (msg.type == "playnexthere") { // User clicked the "Q here" button in one of the tabs
+            if (tabid == sender.tab.id) { // if the tab is already selected, pause the queue
+                saveTabInfo("paused");
+            } else { //else queue to this tab
+                saveTabInfo(sender.tab.id);
+            }
+        } else if (msg.type == "check") { // One of the content scripts is asking if he is the selected tab
             if (tabid == sender.tab.id) {
                 sendresponse({
                     response: "selected"
@@ -107,6 +105,14 @@ chrome.runtime.onMessage.addListener(
                     response: "notselected"
                 });
             }
+        } else if (msg.type == "openurl") { // Popup wants background script to open a new tab with url
+            chrome.tabs.create({
+                url: msg.newurl
+            }, function(tab) {
+                chrome.storage.local.set({
+                    'tab': tab.id
+                }, function() {});
+            });
         }
     });
 
@@ -138,12 +144,12 @@ function next(tabtoupdate) {
 chrome.storage.onChanged.addListener(function(changes, areaName) {
     if (changes.tab) {
         tabid = changes.tab.newValue;
-        if (tabid != "none") {
+        if (tabid && tabid != "paused") { // If a tab is actually selected, let it know that it is selected
             chrome.tabs.sendMessage(tabid, { type: "selected" });
         }
         chrome.tabs.query({ url: "https://www.youtube.com/*" }, function(tabs) {
             tabs.forEach(function(tab) {
-                if (tab.id != tabid) {
+                if (tab.id != tabid) { // all other tabs can fuck off
                     chrome.tabs.sendMessage(tab.id, { type: "notselected" });
                 }
             });

@@ -83,8 +83,6 @@ sortable('.queue', {
 window.onload = function() {
     getTabid();
     writeOutQueue();
-    // tabids = getYoutubeTabids();
-    // tabidsindex = tabids.indexOf(tabid);
 
     chrome.storage.local.get({
         'username': [],
@@ -106,10 +104,15 @@ function getYoutubeTabids() {
 }
 
 function updateTabTitle() {
+    if (tabid == "paused") {
+        currenttabdiv.style.display = 'block';
+        currenttab.innerHTML = "Paused";
+        return;
+    }
     chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
             if (tab.id == tabid) {
-                currenttabdiv.style.display = 'block'
+                currenttabdiv.style.display = 'block';
                 var title = tab.title.replace(/ *\(\d{0,2}\+?\) */, "").replace(" - YouTube", "");
                 currenttab.innerHTML = title;
                 return;
@@ -241,7 +244,6 @@ messagesRef.onSnapshot(function(doc) {
     linklist.forEach(function(element, index) {
         element.onclick = function() {
             openLink(element.getAttribute("url"));
-            //addNext(element.innerHTML, element.getAttribute("url"));
         };
     });
 });
@@ -354,8 +356,9 @@ chrome.tabs.onUpdated.addListener(
 );
 
 currenttabdiv.onclick = function() {
+    if (tabid == "paused") {return}
     chrome.tabs.update(tabid, { 'active': true }, function() {});
     chrome.tabs.get(tabid, function(tab) {
-        chrome.windows.update(tab.windowId, {'focused':true});
+        chrome.windows.update(tab.windowId, { 'focused': true });
     });
 }
