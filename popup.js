@@ -309,7 +309,7 @@ searchbar.addEventListener('keydown', function(e) {
         timeout = setTimeout(function() {
             q = searchBar.value;
             keyWordsearch(q);
-        }, 350);
+        }, 700);
     }
 });
 

@@ -37,6 +37,13 @@ function saveTabInfo(newtabid) {
     }, function() {});
 }
 
+// Save the PIP state to the local storage
+function savePIPInfo(newState) {
+    chrome.storage.local.set({
+        'pip': newState
+    }, function() {});
+}
+
 // CONTEXT MENUS
 chrome.contextMenus.create({
     id: "playnext",
@@ -113,7 +120,12 @@ chrome.runtime.onMessage.addListener(
                     'tab': tab.id
                 }, function() {});
             });
-        }
+        } 
+        // else if (msg.type == "pip") { // User clicked picture-in-picture
+        //     if (tabid == sender.tab.id) {
+        //         savePIPInfo(msg.state);
+        //     }
+        // }
     });
 
 // Play next when video ends

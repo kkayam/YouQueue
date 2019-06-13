@@ -11,9 +11,33 @@ function attachToVid() {
         vid.onended = function(e) {
             nextMessage();
         }
+        // chrome.storage.local.get({
+        //     'pip': []
+        // }, function(result) {
+        //     if (result.pip == true) {
+        //         var interval = window.setInterval(function() {
+        //             if (vid.readyState > 0) {
+        //                 vid.requestPictureInPicture();
+        //                 clearInterval(interval);
+        //             }
+        //         }, 500);
+        //     }
+        // });
+
+        // vid.addEventListener('enterpictureinpicture', () => {
+        //     chrome.runtime.sendMessage({
+        //         type: "pip",
+        //         state: true
+        //     });
+        // });
+        // vid.addEventListener('leavepictureinpicture', () => {
+        //     chrome.runtime.sendMessage({
+        //         type: "pip",
+        //         state: false
+        //     });
+        // });
     }
 }
-attachToVid();
 
 // Snackbar to notify about "playnexthere"
 function injectSnackbar() {
@@ -34,9 +58,32 @@ function showSnackbar(message) {
     x.className = "show";
 
     // After 3 seconds, remove the show class from DIV
-    snackbar_timeout = setTimeout(function() { x.className = ""; snackbar_timeout = null;}, 3000);
+    snackbar_timeout = setTimeout(function() {
+        x.className = "";
+        snackbar_timeout = null;
+    }, 3000);
 }
 injectSnackbar();
+
+// function next() {
+//     var nextvid = document.createElement('a');
+//     nextvid.id = "thumbnail";
+//     nextvid.className = "yt-simple-endpoint inline-block style-scope ytd-thumbnail";
+//     nextvid.setAttribute("aria-hidden", 'true');
+//     nextvid.setAttribute("tabindex", "-1");
+//     nextvid.setAttribute("rel", 'nofollow');
+//     nextvid.setAttribute("href", "/watch?v=Q-EOvWIGKxU");
+//     console.log(nextvid);
+
+//     var renderer = document.createElement("ytd-compact-video-renderer");
+//     renderer.className = "style-scope ytd-watch-next-secondary-results-renderer";
+//     renderer.setAttribute("lockup", "");
+
+//     renderer.appendChild(nextvid);
+//     document.querySelector("div.style-scope.ytd-watch-next-secondary-results-renderer#items").appendChild(renderer);
+
+//     nextvid.click();
+// }
 
 function herebarSnackbarMessage() {
     var message = "";
@@ -150,7 +197,6 @@ function injectBottomMenu() {
         chrome.runtime.sendMessage({
             type: "playnexthere"
         });
-        attachToVid();
     }
 
     bottomMenu.appendChild(nextbar);
