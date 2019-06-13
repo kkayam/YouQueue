@@ -38,11 +38,11 @@ function saveTabInfo(newtabid) {
 }
 
 // Save the PIP state to the local storage
-function savePIPInfo(newState) {
-    chrome.storage.local.set({
-        'pip': newState
-    }, function() {});
-}
+// function savePIPInfo(newState) {
+//     chrome.storage.local.set({
+//         'pip': newState
+//     }, function() {});
+// }
 
 // CONTEXT MENUS
 chrome.contextMenus.create({
