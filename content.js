@@ -2,6 +2,7 @@ var cached = [];
 cached.push(location.href);
 var bottomMenu;
 var snackbar_timeout;
+var selected;
 
 // Get the videoplayer
 function attachToVid() {
@@ -11,6 +12,18 @@ function attachToVid() {
         vid.onended = function(e) {
             nextMessage();
         }
+
+        vid.addEventListener("pause", function() {
+            chrome.storage.local.set({
+                'playing': false
+            }, function() {});
+        });
+
+        vid.addEventListener("play", function() {
+            chrome.storage.local.set({
+                'playing': true
+            }, function() {});
+        });
         // chrome.storage.local.get({
         //     'pip': []
         // }, function(result) {
@@ -258,11 +271,6 @@ window.addEventListener("yt-page-data-updated", function() {
     injectPrimaryAddButton();
 });
 
-// Attaches to video when user navigates, uses this listener since the content script wont be refreshed each time you click on a new video
-window.addEventListener("yt-navigate-finish", function() {
-    attachToVid();
-});
-
 // Listen to directions from the background script
 chrome.runtime.onMessage.addListener(
     function(msg, sender, sendResponse) {
@@ -272,3 +280,17 @@ chrome.runtime.onMessage.addListener(
             document.querySelector("a#here").style.color = "white";
         }
     });
+
+window.addEventListener("yt-navigate-finish", function() {
+    attachToVid();
+});
+
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+    if (changes.playing) {
+        if (changes.playing.newValue) {
+            document.querySelector("video").play();
+        } else {
+            document.querySelector("video").pause();
+        }
+    }
+});

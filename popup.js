@@ -49,6 +49,7 @@ var messagesRef = db.collection("chat").doc("messages");
 var queue = document.getElementById('queue');
 var removeButton = document.getElementById('removeQueue');
 var nextButton = document.getElementById('nextQueue');
+var playpause = document.getElementById('playpause');
 var searchBar = document.getElementById('searchbar');
 searchBar.focus();
 var searchresults = document.getElementById('searchresults');
@@ -64,6 +65,8 @@ var musicbutton = document.getElementById("musicbutton");
 var chat = document.getElementById("chat");
 var chatbutton = document.getElementById("chatbutton");
 var chatbuttonimg = chatbutton.getElementsByTagName("img")[0];
+
+var playing = true;
 
 sortable('.queue', {
     forcePlaceholderSize: true
@@ -83,14 +86,15 @@ sortable('.queue', {
 window.onload = function() {
     getTabid();
     writeOutQueue();
-
     chrome.storage.local.get({
         'username': [],
-        'chatdisplay': []
+        'chatdisplay': [],
+        'playing': []
     }, function(result) {
         username.value = result.username;
         chat.style.display = result.chatdisplay;
         if (result.chatdisplay == "block") chatbuttonimg.style.transform = 'rotate(180deg)';
+        if (!result.playing) {playpause.src="images/play.png";}
     });
 };
 
@@ -295,6 +299,17 @@ chatbutton.onclick = function() {
     }, function() {});
 }
 
+playpause.onclick = function() {
+    chrome.storage.local.get({
+        'playing': []
+    }, function(result) {
+        chrome.storage.local.set({
+            'playing': !result.playing
+        }, function() {});
+    });
+}
+
+
 
 var timeout = null;
 searchbar.addEventListener('keydown', function(e) {
@@ -342,6 +357,13 @@ chrome.storage.onChanged.addListener(function(changes, areaName) {
         tabid = changes.tab.newValue;
         updateTabTitle();
     }
+    if (changes.playing) {
+        if (changes.playing.newValue) {
+            playpause.src = "images/pause.png";
+        } else {
+            playpause.src = "images/play.png";
+        }
+    }
 });
 
 
@@ -356,7 +378,7 @@ chrome.tabs.onUpdated.addListener(
 );
 
 currenttabdiv.onclick = function() {
-    if (tabid == "paused") {return}
+    if (tabid == "paused") { return }
     chrome.tabs.update(tabid, { 'active': true }, function() {});
     chrome.tabs.get(tabid, function(tab) {
         chrome.windows.update(tab.windowId, { 'focused': true });

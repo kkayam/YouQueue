@@ -92,6 +92,15 @@ img.next {
 
 img.next:hover {
     transform: translateX(0.15em);
+    transition: transform 0.3s;
+}
+
+img.playpause {
+    transform: scale(0.9);
+    transition: transform 0.3s;
+}
+img.playpause:active {
+    transform: scale(1.25);
     transition: transform 0.1s;
 }
 
@@ -100,6 +109,7 @@ img.next:hover {
     width: 66px;
     height: 80px;
     display: inline-block;
+    vertical-align: middle;
     margin: 0 auto;
     transform: scale(0.3);
     position: relative;
