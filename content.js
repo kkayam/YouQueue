@@ -278,19 +278,17 @@ chrome.runtime.onMessage.addListener(
             document.querySelector("a#here").style.color = "black";
         } else if (msg.type == "selected") {
             document.querySelector("a#here").style.color = "white";
+        } 
+        if (msg.type == "play") {
+            document.querySelector("video").play();
+        } else if (msg.type == "pause") {
+            document.querySelector("video").pause();
         }
     });
 
 window.addEventListener("yt-navigate-finish", function() {
     attachToVid();
-});
-
-chrome.storage.onChanged.addListener(function(changes, areaName) {
-    if (changes.playing) {
-        if (changes.playing.newValue) {
-            document.querySelector("video").play();
-        } else {
-            document.querySelector("video").pause();
-        }
-    }
+    chrome.storage.local.set({
+                'playing': true
+            }, function() {});
 });

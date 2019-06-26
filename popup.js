@@ -303,9 +303,11 @@ playpause.onclick = function() {
     chrome.storage.local.get({
         'playing': []
     }, function(result) {
-        chrome.storage.local.set({
-            'playing': !result.playing
-        }, function() {});
+        if (result.playing) {
+            chrome.tabs.sendMessage(tabid, { type: "pause" });
+        } else {
+            chrome.tabs.sendMessage(tabid, { type: "play" });
+        }
     });
 }
 
