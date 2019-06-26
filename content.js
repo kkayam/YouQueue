@@ -14,15 +14,17 @@ function attachToVid() {
         }
 
         vid.addEventListener("pause", function() {
-            chrome.storage.local.set({
-                'playing': false
-            }, function() {});
+            chrome.runtime.sendMessage({
+                type: "playing",
+                state: false
+            });
         });
 
         vid.addEventListener("play", function() {
-            chrome.storage.local.set({
-                'playing': true
-            }, function() {});
+            chrome.runtime.sendMessage({
+                type: "playing",
+                state: true
+            });
         });
         // chrome.storage.local.get({
         //     'pip': []
@@ -288,7 +290,9 @@ chrome.runtime.onMessage.addListener(
 
 window.addEventListener("yt-navigate-finish", function() {
     attachToVid();
-    chrome.storage.local.set({
-                'playing': true
-            }, function() {});
+    chrome.runtime.sendMessage({
+                type: "playing",
+                state: true
+            });
 });
+

@@ -120,12 +120,25 @@ chrome.runtime.onMessage.addListener(
                     'tab': tab.id
                 }, function() {});
             });
-        } 
-        // else if (msg.type == "pip") { // User clicked picture-in-picture
-        //     if (tabid == sender.tab.id) {
-        //         savePIPInfo(msg.state);
-        //     }
-        // }
+        } else if (msg.type == "playing") { // One of the content scripts is asking if he is the selected tab
+            if (tabid == sender.tab.id) {
+                if (msg.state) {
+                    chrome.storage.local.set({
+                        'playing': true
+                    }, function() {});
+                } else {
+                    chrome.storage.local.set({
+                        'playing': false
+                    }, function() {});
+                }
+            }
+
+            // else if (msg.type == "pip") { // User clicked picture-in-picture
+            //     if (tabid == sender.tab.id) {
+            //         savePIPInfo(msg.state);
+            //     }
+            // }
+        }
     });
 
 // Play next when video ends
