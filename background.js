@@ -166,6 +166,20 @@ function next(tabtoupdate) {
     });
 }
 
+chrome.commands.onCommand.addListener(function(command) {
+    if (command === "playpause") {
+        chrome.storage.local.get({
+            'playing': []
+        }, function(result) {
+            if (result.playing) {
+                chrome.tabs.sendMessage(tabid, { type: "pause" });
+            } else {
+                chrome.tabs.sendMessage(tabid, { type: "play" });
+            }
+        });
+    }
+});
+
 chrome.storage.onChanged.addListener(function(changes, areaName) {
     if (changes.tab) {
         tabid = changes.tab.newValue;
