@@ -283,8 +283,16 @@ chrome.runtime.onMessage.addListener(
         } 
         if (msg.type == "play") {
             document.querySelector("video").play();
+            chrome.runtime.sendMessage({
+                type: "playing",
+                state: true
+            });
         } else if (msg.type == "pause") {
             document.querySelector("video").pause();
+            chrome.runtime.sendMessage({
+                type: "playing",
+                state: false
+            });
         }
     });
 
