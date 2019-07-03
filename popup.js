@@ -64,6 +64,7 @@ var username = document.getElementById("username");
 var musicbutton = document.getElementById("musicbutton");
 var chat = document.getElementById("chat");
 var chatbutton = document.getElementById("chatbutton");
+var donationbutton = document.getElementById("donationbutton");
 var chatbuttonimg = chatbutton.getElementsByTagName("img")[0];
 
 var playing = true;
@@ -385,4 +386,11 @@ currenttabdiv.onclick = function() {
     chrome.tabs.get(tabid, function(tab) {
         chrome.windows.update(tab.windowId, { 'focused': true });
     });
+}
+
+donationbutton.onclick = function() {
+    chrome.runtime.sendMessage({
+            type: "openurl",
+            newurl: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZVT654MY78XQ&source=url"
+        });
 }

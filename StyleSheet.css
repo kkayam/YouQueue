@@ -307,3 +307,27 @@ img.clickrotate {
 .astext:focus {
     outline: 0;
 }
+
+button#donationbutton {
+    font-size: 13pt;
+    opacity: 0.4;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    transition: all 0.15s;
+    width: auto;
+    background: #fff;
+    border-radius: 70px;
+    margin-bottom: 4px;
+    width: 180px;
+    /*font-weight: bold;*/
+}
+
+button#donationbutton:focus {
+    outline: 0;
+}
+
+button#donationbutton:hover {
+    background: #DDDDDD;
+}
