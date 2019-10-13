@@ -3,7 +3,7 @@
 
     "name": "YOUTUBE QUEUE",
     "description": "Queue and control your youtube videos and keep the performance",
-    "version": "6.4.3",
+    "version": "6.5.4",
     "permissions": [
         "https://www.youtube.com/*",
         "contextMenus",
@@ -23,6 +23,7 @@
                 "default": "Ctrl+Shift+Q",
                 "mac": "Ctrl+Shift+Q"
                 },
+                
         	"description": "Play or pause current video.",
             "global": true
             }

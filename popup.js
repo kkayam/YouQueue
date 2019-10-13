@@ -251,6 +251,7 @@ messagesRef.onSnapshot(function(doc) {
             openLink(element.getAttribute("url"));
         };
     });
+    chatbox.scrollTo(0,10000);
 });
 
 function sendChat(text) {
