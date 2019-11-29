@@ -279,8 +279,12 @@ musicbutton.onclick = function() {
                 if (taburl.includes("watch?v=")) {
                     var b = document.createElement("b");
                     b.className = "chatlinkparent";
-                    b.innerHTML = username.value + " is listening to " + "<a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a>";
+                    b.innerHTML = username.value + " is listening to " + "<a class='chatlink' url='" + taburl + "'>" + currenttab.innerHTML + "</a>";                    
                     sendChat(b.outerHTML);
+                    musicbutton.disabled = true;
+                    timeout = setTimeout(function() {
+                        musicbutton.disabled = false;
+                    }, 2000);
                 }
             }
         });
