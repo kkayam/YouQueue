@@ -2,8 +2,8 @@
     "manifest_version": 2,
 
     "name": "YOUTUBE QUEUE",
-    "description": "Queue and control your youtube videos and keep the performance",
-    "version": "6.5.4",
+    "description": "Queue and control your youtube videos and keep the performance. Queues your Youtube videos with a click or the search bar in the app",
+    "version": "6.5.5",
     "permissions": [
         "https://www.youtube.com/*",
         "contextMenus",

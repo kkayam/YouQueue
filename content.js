@@ -133,7 +133,7 @@ function injectPrimaryAddButton() {
     button.className = "addbuttonprimary";
     button.appendChild(img);
     button.onclick = function() {
-        button.style.background = '#FF9E9E';
+        button.style.background = '#ffc1c1';
         addNext(title.trim(), document.location.href);
     };
 
@@ -238,7 +238,7 @@ function injectAddButton(dismissable) {
     button.appendChild(img);
 
     button.onclick = function() {
-        button.style.background = '#FF9E9E';
+        button.style.background = '#ffc1c1';
         addNext(title.getAttribute("title").trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
     };
     thumbnailoverlay.appendChild(button);
