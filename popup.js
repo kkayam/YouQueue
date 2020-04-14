@@ -251,7 +251,7 @@ messagesRef.onSnapshot(function(doc) {
             openLink(element.getAttribute("url"));
         };
     });
-    chatbox.scrollTo(0,10000);
+    chatbox.scrollTo(0,10000000000);
 });
 
 function sendChat(text) {
@@ -299,7 +299,7 @@ chatbutton.onclick = function() {
     } else {
         chat.style.display = 'block';
         chatbuttonimg.style.transform = 'rotate(180deg)';
-        chatbox.scrollTo(0,10000);
+        chatbox.scrollTo(0,10000000000);
     }
     chrome.storage.local.set({
         'chatdisplay': chat.style.display
