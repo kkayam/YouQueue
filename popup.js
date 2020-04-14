@@ -59,6 +59,7 @@ var tip = emptytext.getElementsByTagName('tip')[0];
 var currenttab = document.getElementById("currenttab");
 var currenttabdiv = document.getElementById("currenttabdiv");
 var chatbox = document.getElementById("chatbox");
+var chatboxholder = document.getElementById("chatboxholder");
 var chatinput = document.getElementById("chatinput");
 var username = document.getElementById("username");
 var musicbutton = document.getElementById("musicbutton");
@@ -251,7 +252,7 @@ messagesRef.onSnapshot(function(doc) {
             openLink(element.getAttribute("url"));
         };
     });
-    chatbox.scrollTo(0,10000000000);
+    chatboxholder.scrollTo(0,10000000000);
 });
 
 function sendChat(text) {
@@ -299,7 +300,7 @@ chatbutton.onclick = function() {
     } else {
         chat.style.display = 'block';
         chatbuttonimg.style.transform = 'rotate(180deg)';
-        chatbox.scrollTo(0,10000000000);
+        chatboxholder.scrollTo(0,10000000000);
     }
     chrome.storage.local.set({
         'chatdisplay': chat.style.display
