@@ -239,7 +239,11 @@ function injectAddButton(dismissable) {
 
     button.onclick = function() {
         button.style.background = '#ffc1c1';
-        addNext(title.getAttribute("title").trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
+        if(title.hasAttribute("title")){
+            addNext(title.getAttribute("title").trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
+        } else {
+            addNext(title.innerHTML.trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
+        }
     };
     thumbnailoverlay.appendChild(button);
 }
