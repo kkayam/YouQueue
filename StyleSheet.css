@@ -367,6 +367,7 @@ button#donationbutton {
     border: 0;
     transition: all 0.15s;
     width: auto;
+    align-self: center;
     background: #fff;
     border-radius: 70px;
     margin-bottom: 4px;
