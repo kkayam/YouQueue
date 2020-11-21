@@ -3,7 +3,6 @@ cached.push(location.href);
 var bottomMenu;
 var snackbar_timeout;
 var selected;
-
 // Get the videoplayer
 function attachToVid() {
     var vid = document.querySelector("video");
@@ -26,31 +25,6 @@ function attachToVid() {
                 state: true
             });
         });
-        // chrome.storage.local.get({
-        //     'pip': []
-        // }, function(result) {
-        //     if (result.pip == true) {
-        //         var interval = window.setInterval(function() {
-        //             if (vid.readyState > 0) {
-        //                 vid.requestPictureInPicture();
-        //                 clearInterval(interval);
-        //             }
-        //         }, 500);
-        //     }
-        // });
-
-        // vid.addEventListener('enterpictureinpicture', () => {
-        //     chrome.runtime.sendMessage({
-        //         type: "pip",
-        //         state: true
-        //     });
-        // });
-        // vid.addEventListener('leavepictureinpicture', () => {
-        //     chrome.runtime.sendMessage({
-        //         type: "pip",
-        //         state: false
-        //     });
-        // });
     }
 }
 
@@ -80,25 +54,6 @@ function showSnackbar(message) {
 }
 injectSnackbar();
 
-// function next() {
-//     var nextvid = document.createElement('a');
-//     nextvid.id = "thumbnail";
-//     nextvid.className = "yt-simple-endpoint inline-block style-scope ytd-thumbnail";
-//     nextvid.setAttribute("aria-hidden", 'true');
-//     nextvid.setAttribute("tabindex", "-1");
-//     nextvid.setAttribute("rel", 'nofollow');
-//     nextvid.setAttribute("href", "/watch?v=Q-EOvWIGKxU");
-//     console.log(nextvid);
-
-//     var renderer = document.createElement("ytd-compact-video-renderer");
-//     renderer.className = "style-scope ytd-watch-next-secondary-results-renderer";
-//     renderer.setAttribute("lockup", "");
-
-//     renderer.appendChild(nextvid);
-//     document.querySelector("div.style-scope.ytd-watch-next-secondary-results-renderer#items").appendChild(renderer);
-
-//     nextvid.click();
-// }
 
 function herebarSnackbarMessage() {
     var message = "";
@@ -125,15 +80,18 @@ function injectPrimaryAddButton() {
 
     var titlediv = document.querySelector("h1.title");
     var title = titlediv.querySelector("yt-formatted-string.ytd-video-primary-info-renderer").innerHTML;
-
+    
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/plus.png");
 
     var button = document.createElement("button");
+
+    
     button.className = "addbuttonprimary";
     button.appendChild(img);
+    // button.innerHTML += "QUEUE";
     button.onclick = function() {
-        button.style.background = '#ffc1c1';
+        img.style.background = '#e6e6e6';
         addNext(title.trim(), document.location.href);
     };
 
@@ -258,6 +216,14 @@ document.arrive("#dismissable", function() {
     injectAddButton(this);
 });
 
+document.querySelectorAll(".html5-main-video").forEach(function() {
+    attachToVid();
+});
+
+document.arrive(".html5-main-video",function(){
+    attachToVid();
+});
+
 // Hide Bottom menu on fullscreen
 document.addEventListener("fullscreenchange", (event) => {
     if (document.fullscreenElement) {
@@ -301,7 +267,6 @@ chrome.runtime.onMessage.addListener(
     });
 
 window.addEventListener("yt-navigate-finish", function() {
-    attachToVid();
     chrome.runtime.sendMessage({
                 type: "playing",
                 state: true
