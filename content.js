@@ -77,21 +77,21 @@ function herebarSnackbarMessage() {
 function injectPrimaryAddButton() {
     var video_primary_info = document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer");
     var top_level_buttons = video_primary_info.querySelector("div#top-level-buttons");
+    top_level_buttons.querySelectorAll(".addbuttonprimary").forEach(function(button) {
+        top_level_buttons.removeChild(button);
+    });
 
     var titlediv = document.querySelector("h1.title");
     var title = titlediv.querySelector("yt-formatted-string.ytd-video-primary-info-renderer").innerHTML;
-    
+
     var img = document.createElement("img");
     img.src = chrome.extension.getURL("images/plus.png");
 
     var button = document.createElement("button");
-
-    
     button.className = "addbuttonprimary";
     button.appendChild(img);
-    // button.innerHTML += "QUEUE";
     button.onclick = function() {
-        img.style.background = '#e6e6e6';
+        button.style.background = '#FF9E9E';
         addNext(title.trim(), document.location.href);
     };
 
@@ -242,6 +242,16 @@ chrome.runtime.sendMessage({
 window.addEventListener("yt-page-data-updated", function() {
     injectPrimaryAddButton();
 });
+// window.addEventListener("DOMContentLoaded", function() {
+//     injectPrimaryAddButton();
+// });
+
+document.arrive("#top-level-buttons",function(){
+    injectPrimaryAddButton();
+    document.unbindArrive("#top-level-buttons");
+});
+
+
 
 // Listen to directions from the background script
 chrome.runtime.onMessage.addListener(
@@ -267,6 +277,7 @@ chrome.runtime.onMessage.addListener(
     });
 
 window.addEventListener("yt-navigate-finish", function() {
+    injectPrimaryAddButton();
     chrome.runtime.sendMessage({
                 type: "playing",
                 state: true
