@@ -192,6 +192,11 @@ function injectAddButton(dismissable) {
 
     var button = document.createElement("img");
     button.src = chrome.extension.getURL("images/plus.png");
+    if (!document.location.href.match(/watch/)){
+        button.style.width="18px";
+        button.style.height="18px";
+        button.style.borderWidth="7px";
+    }
 
     // var button = document.createElement("button");
     button.className = "addbutton";
