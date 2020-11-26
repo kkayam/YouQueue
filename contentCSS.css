@@ -2,24 +2,27 @@
 .addbuttonprimary,
 .addbutton {
     vertical-align: bottom;
-    opacity: 0.6;
+    opacity: 0.7;
     border-width: 0;
-    width: 23px;
-    height: 23px;
+    width: 15px;
+    height: 15px;
     left: 6px;
-    bottom: 6px;
-    border-radius: 5px;
+    bottom: 8px;
+    border-radius: 50px;
     background: #ff5f5f;
+    border: solid 5px #ff5f5f;
     padding: 0;
     position: absolute;
     z-index: 1;
 }
 
 .addbuttonprimary {
+    opacity: 0.8;
     position: initial;
     align-self: center;
-    width: 28px;
-    height: 28px;
+    width: 18px;
+    height: 18px;
+    border-width: 6px;
     left: 0;
     margin-left: 8px;
     margin-bottom: 6px;
@@ -29,17 +32,10 @@
 .addbutton:focus {
     outline: 0;
 }
-.addbuttonprimary:hover,
 .addbutton:hover {
     opacity: 1;
 }
 
-.addbuttonprimary img,
-.addbutton img {
-  width: 60%;
-  height: 60%;
-  vertical-align: middle;
-}
 
 /* Bottom menu */
 #bottomMenu a {

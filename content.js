@@ -3,6 +3,9 @@ cached.push(location.href);
 var bottomMenu;
 var snackbar_timeout;
 var selected;
+
+var addbuttoncolor2 = "#c4c4c4"
+
 // Get the videoplayer
 function attachToVid() {
     var vid = document.querySelector("video");
@@ -84,14 +87,13 @@ function injectPrimaryAddButton() {
     var titlediv = document.querySelector("h1.title");
     var title = titlediv.querySelector("yt-formatted-string.ytd-video-primary-info-renderer").innerHTML;
 
-    var img = document.createElement("img");
-    img.src = chrome.extension.getURL("images/plus.png");
+    var button = document.createElement("img");
+    button.src = chrome.extension.getURL("images/plus.png");
 
-    var button = document.createElement("button");
     button.className = "addbuttonprimary";
-    button.appendChild(img);
     button.onclick = function() {
-        button.style.background = '#FF9E9E';
+        button.style.background = addbuttoncolor2;
+        button.style.borderColor = addbuttoncolor2;
         addNext(title.trim(), document.location.href);
     };
 
@@ -188,15 +190,16 @@ function injectAddButton(dismissable) {
     var thumbnail = dismissable.querySelector("#thumbnail");
     var title = dismissable.querySelector("#video-title");
 
-    var img = document.createElement("img");
-    img.src = chrome.extension.getURL("images/plus.png");
+    var button = document.createElement("img");
+    button.src = chrome.extension.getURL("images/plus.png");
 
-    var button = document.createElement("button");
+    // var button = document.createElement("button");
     button.className = "addbutton";
-    button.appendChild(img);
+    // button.appendChild(img);
 
     button.onclick = function() {
-        button.style.background = '#ffc1c1';
+        button.style.background = addbuttoncolor2;
+        button.style.borderColor = addbuttoncolor2;
         if(title.hasAttribute("title")){
             addNext(title.getAttribute("title").trim(), "https://www.youtube.com" + thumbnail.getAttribute("href"));
         } else {
