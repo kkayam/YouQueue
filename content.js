@@ -181,14 +181,14 @@ function injectBottomMenu() {
 }
 injectBottomMenu();
 
-// Add button to div called dismissable
-function injectAddButton(dismissable) {
-    var thumbnailoverlay = dismissable.querySelector("ytd-thumbnail");
+// Add button to div called dismissible
+function injectAddButton(dismissible) {
+    var thumbnailoverlay = dismissible.querySelector("ytd-thumbnail");
     if (thumbnailoverlay == null || thumbnailoverlay.querySelector(".addbutton") != null) {
         return;
     }
-    var thumbnail = dismissable.querySelector("#thumbnail");
-    var title = dismissable.querySelector("#video-title");
+    var thumbnail = dismissible.querySelector("#thumbnail");
+    var title = dismissible.querySelector("#video-title");
 
     var button = document.createElement("img");
     button.src = chrome.extension.getURL("images/plus.png");
@@ -214,13 +214,13 @@ function injectAddButton(dismissable) {
     thumbnailoverlay.appendChild(button);
 }
 
-// Select all current dismissables
-document.querySelectorAll("#dismissable").forEach(function(dismissable) {
-    injectAddButton(dismissable);
+// Select all current dismissibles
+document.querySelectorAll("#dismissible").forEach(function(dismissible) {
+    injectAddButton(dismissible);
 });
 
-// When the "dismissable" div arrives, inject button
-document.arrive("#dismissable", function() {
+// When the "dismissible" div arrives, inject button
+document.arrive("#dismissible", function() {
     injectAddButton(this);
 });
 
