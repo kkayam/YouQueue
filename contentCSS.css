@@ -6,9 +6,10 @@
     border-width: 0;
     width: 14px;
     height: 14px;
-    left: 6px;
-    bottom: 8px;
-    border-radius: 50px;
+    left: 0px;
+    top: 0px;
+    border-radius: 0px;
+    border-bottom-right-radius: 6px;
     background: #ff5f5f;
     border: solid 5px #ff5f5f;
     padding: 0;
@@ -20,6 +21,7 @@
     opacity: 0.8;
     position: initial;
     align-self: center;
+    border-radius: 50px;
     width: 18px;
     height: 18px;
     border-width: 6px;
